@@ -1,0 +1,2 @@
+# AT2
+Very incomplete (!) typed lecture notes for the course Algebraic Topology II, taught by Prof. Stefan Schwede during the winter semester 21/22. The notes are a disaster and I strongly suggest not to look at them, I put them here for archival reasons and because having them public might at some point act as a spur to revisit them (although it is very unlikely that I will ever have both the time and the fancy for it).
