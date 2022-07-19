@@ -1,0 +1,238 @@
+% Lecture 6
+
+\lecture[After the (homotopy) cofiber, we turn to the (homotopy) fiber. After that, (boring) technicalities about $\Sp$.]{2022-05-02}
+
+We conclude the story of the mapping cone with a familiar\rightnote{Fyi, in $\T_*$ one doesn't have to worry about ndr pairs and similar amenities: every h-cofibration is a closed embedding!} (from back when we first learned about homology) twist.
+
+\begin{definition}
+A continuous map $f:A\to B$ is a \tit{h-cofibration} if it has the homotopy extension property (HEP). As a consequence, the quotient map
+\[Cf=A\smsh[0,1]\cup_f B\xto{*\cup\id}B/A\]
+is a homotopy equivalence.
+\end{definition}
+
+Let $f:X\to Y$ be a morphism of spectra that is levelwise a h-cofibration. Then the quotient morphism $Cf\to Y/X$ is levelwise a homotopy equivalence, hence a stable equivalence (this works for sequential or orthogonal spectra, indifferently). We define a connecting morphism $\pi_{k+1}(Y/X)\to\pi_k(X)$ via
+\[
+\begin{tikzcd}
+\pi_{k+1}(Y/X) \ar[r,dashed] & \pi_k(X)\\
+\pi_{k+1}(Cf) \ar[u,"\cong"] \ar[ur,"\delta"'] & 
+\end{tikzcd}
+\]
+and this buys us the following corollary (a \enquote{strict} version of the previous proposition).\rightnote{The quotient is the strict cofiber, the mapping cone the homotopy cofiber.}
+
+\begin{corollary}\label{corollary:les-quotient}
+Let $f:X\to Y$ be a morphism of spectra that is levelwise a h-fibration. Then the sequence
+\[\cdots\to\pi_k(X)\xto{f_*}\pi_k(Y)\xto{i_*}\pi_k(X/Y)\xto{\delta}\pi_{k-1}(X)\to\cdots\]
+is exact.
+\end{corollary}
+
+\subsection{The Homotopy Fiber Sequence}
+
+\begin{construction}
+The \tit{homotopy fiber} of a based continuous map $f:A\to B$ is the pullback
+\[Ff=*\times_B B^{[0,1]}\times_B A=\cb{(\lambda,a)\in B^{[0,1]}\times A\mid \lambda(0)=*,\ \lambda(1)=f(a)}.\]
+This comes with natural maps
+\[\map_*(S^1,B)=\Omega B\to Ff\xto{q}A\]
+where $q$ is the projection and the first map is $(\mu:S^1\to B)\mapsto(\mu\circ t,*)$, where $t$ is the map defined at the start of the section, winding the interval to a circle (or any similar map, really).
+\end{construction}
+
+\begin{construction}
+Let $f:X\to Y$ be a morphism of sequential/orthogonal spectra, its \tit{homotopy fiber} is the pullback
+\[
+\begin{tikzcd}[column sep=huge]
+\Omega Y \ar[r,"i"] & Ff \ar[d] \ar[r,"q"] & X \ar[d,"{(*,f)}"]\\
+ & Y^{[0,1]} \ar[r,"{(\ev_0,\ev_1)}"] & Y\times Y
+\end{tikzcd}
+\]
+The connecting morphisms $\delta:\pi_{1+k}(Y)\to\pi_k(Ff)$ is defined as the composite
+\[
+\begin{tikzcd}
+\pi_{1+k}(Y) \ar[r,"\alpha^\inv","\cong"'] & \pi_{k}(\Omega Y) \ar[r,"i_*"] & \pi_k(Ff)
+\end{tikzcd}
+\]
+
+Moreover, we can define a comparison morphism $(Ff)\smsh S^1\to Cf$. Let $f:A\to B$ be a continuous map of based spaces. We define
+\begin{align*}
+\bar h:Ff\times[0,1]&\to(A\smsh[0,1])\cup_f B\\
+(\lambda,a,t)&\mapsto\begin{cases}
+a\smsh 2t & 0\leq t\leq 1/2\\
+\lambda(2-2t) & 1/2\leq t\leq1
+\end{cases}
+\end{align*}
+and clearly $\bar h(\lambda,a,0)=\bar h(\lambda,a,1)=*$, so $\bar h$ factors uniquely as $\bar h=h\circ p$
+\[
+\begin{tikzcd}
+Ff\times[0,1] \ar[dr,"\bar h"'] \ar[rr,"p"] & & Ff\smsh S^1 \ar[dl,dashed,"h"]\\
+ & Cf & 
+\end{tikzcd}
+\]
+giving us a comparison morphism $h:(Ff)\smsh S^1\to Cf$.
+\end{construction}
+
+\begin{proposition}
+For every morphism $f:X\to Y$ of sequential spectra, the sequence
+\[\cdots\to\pi_k(X)\xto{f_*}\pi_k(Y)\xto{\delta}\pi_{k-1}(Ff)\xto{q_*}\pi_{k-1}(X)\to\cdots\]
+is exact, and the morphism
+\[h:(Ff)\smsh S^1\to Cf\]
+is a stable equivalence.
+\end{proposition}
+
+\begin{proof}
+The long exact homotopy group sequence\rightnote{Last time we had to establish a long exact sequence from scratch, as the mapping cone does not already yield one in the unstable case.}
+\[\cdots\to\pi_{n+k}(X_n)\xto{(f_n)_*}\pi_{k+n}(Y_n)\xto{\delta}\pi_{n+k-1}(Ff_n)\xto{(q_n)_*}\pi_{n+k-1}(X_n)\to\cdots\]
+exists and is exact for sufficiently large $n$, depending on $k$. Since filtered (hence in particular, sequential) colimits of modules are exact, we get an exact sequence on colimits.
+
+To show that $h:(Ff)\smsh S^1\to Cf$ is a stable equivalence, it suffices to show that the map $h_*\circ(-\smsh S^1):\pi_k(Ff)\to\pi_{k+1}(cf)$ is an isomorphism for all $k\in\Z$.
+
+\smallskip
+Claim. The following diagram commutes
+\[
+\begin{tikzcd}
+\pi_{k+1}(Y) \ar[d,"-1"] \ar[r,"\delta"] & \pi_k(Ff) \ar[d,"h_*\circ(-\smsh S^1)"] \ar[r,"q_*"] & \pi_k(X) \ar[d,eq]\\
+\pi_{k+1}(Y) \ar[r,"i_*"'] & \pi_{k+1}(Cf) \ar[r,"\delta"'] & \pi_k(X)
+\end{tikzcd}
+\]
+
+\begin{claimproof}
+To show that the right square commutes, observe that the composite
+\[(Ff)\smsh S^1\xto{h}Cf\xto{p}X\smsh S^1\]
+is homotopic to $q\smsh S^1$ via the homotopy
+\begin{align*}
+    [0,1]\times((Ff)\smsh S^1)&\to X\smsh S^1\\
+    (t,(\lambda,a),s)&\mapsto\begin{cases}
+    a\smsh\frac{2s}{2-t} & 0\leq s\leq 1-t/2\\
+    * & 1-t/2\leq s\leq1
+    \end{cases},
+\end{align*}
+hence\todo[color=red]{Not sure I understand what's happening}
+\begin{align*}
+    \delta\circ h_*(-\smsh S^1)&=(-\smsh S^{-1})\circ p_*\circ h_*\circ(-\smsh S^1)\\
+    &=(-\smsh S^1)\circ(q\smsh S^1)_*\circ(-\smsh S^1)\\
+    &=(-\smsh S^{-1})\circ(-\smsh S^1)\circ q_*=q_*.
+\end{align*}
+
+For the left half of the diagram, we will need that the following diagram commutes up to homotopy
+\[
+\begin{tikzcd}
+(\Omega Y)\smsh S^1 \ar[d,"\epsilon"] \ar[r,"i\smsh\tau"] & Ff\smsh S^1 \ar[d,"h"]\\
+Y \ar[r,"i"] & Cf
+\end{tikzcd}
+\]
+as witnessed by\todo[color=red]{The formula for the homotopy could be wrong}
+\begin{align*}
+    [0,1]\times((\Omega Y)\smsh S^1)&\to Cf\\
+    (t,\omega\smsh x)&\mapsto\begin{cases}
+    * & 0\leq x\leq t/2\\
+    \omega\left(\frac{2(1-t)}{2-x}\right) & t/2\leq x\leq1
+    \end{cases}
+\end{align*}
+This gives
+\begin{align*}
+    h_*(\delta(y)\smsh S^1)=h_*(i_*(\alpha^\inv(y))\smsh S^1)&=h_*((i\smsh S^1)_*(\alpha^\inv(y)\smsh S^1))\\
+    &=-i_*(\epsilon(\alpha^\inv(y)\smsh S^1))\\
+    &=-i_*(y),
+\end{align*}
+considering
+\[
+\begin{tikzcd}
+\pi_{k}(\Omega Y) \ar[dr,"\alpha^\inv"',"\cong"] \ar[rr,"(-\smsh S^1)_*"] & & \pi_{k+1}((\Omega Y)\smsh S^1) \ar[dl,"\epsilon_*"]\\
+ & \pi_{k+1}(Y) & 
+\end{tikzcd}
+\]
+for $y\in\pi_{k+1}(Y)$.\end{claimproof}
+Thus we can conclude via five lemma.
+\end{proof}
+
+Let $f:X\to Y$ be a map of spectra that is levelwise a Serre fibration. Then the strict fiber\rightnote{This is dual to\\ the homotopy equivalence $Cf\simeq X/Y$ for h-cofibrations.} $F_n=f^\inv_n(*_{Y_n})\subset X_n$ maps by a weak equivalence to the homotopy fibre $(Ff)_n=F(f_n)$, via $x\mapsto(\const_*,x)$. We get a new connecting morphism
+\[
+\begin{tikzcd}
+\pi_k(Y) \ar[dr,"\delta"] \ar[r,"\delta",dashed] & \pi_{k-1}(F) \ar[d,"\cong"]\\
+ & \pi_{k-1}(Ff)
+\end{tikzcd}
+\]
+where $F$ is the levelwise strict fiber over the basepoint.
+
+\begin{corollary}
+Let $f:X\to Y$ be a morphism of spectra that is levelwise a Serre fibration. Then the sequence
+\[\cdots\to\pi_k(F)\xto{\incl_*}\pi_k(X)\xto{f_*}\pi_k(Y)\xto{\delta}\pi_{k-1}(F)\to\cdots\]
+is exact.
+\end{corollary}
+
+Now that we have the mapping cone and homotopy fiber sequences we can prove some basic facts on spectra.
+
+\subsection{Important (Albeit Annoyingly Technical) Spectra Facts}
+
+\begin{proposition}\label{proposition:homotopy-of-wedges-and-products-of-spectra}\rightnote{\upshape The first point is a standard fact for homology which fails horribly for unstable homotopy groups, conversely for the second point. Somehow in the stable world homotopy behaves often much like homology (again: what does this mean, \tit{really?}).}
+The following holds.
+\begin{itemize}
+    \item[i)] For every family $\cb{X^i}_{i\in I}$ of sequential spectra, the natural map
+    \[\bigoplus_{i\in I}\pi_k(X^i)\to\pi_k\left(\bigvee_{i\in I}X^i\right)\]
+    is an isomorphism.
+    \item[ii)] For every finite index set $I$, the canonical map
+    \[\pi_k\left(\prod_{i\in I} X^i\right)\to\prod_{i\in I}\pi_k(X^i)\]
+    is an isomorphism.
+    \item[iii)] If $I$ is finite, the natural map\leftnote{\upshape Note that the wedge product is the coproduct in $\T_*$ (and so in $\Sp$).}
+    \[\bigvee_{i\in I}X^i\to\prod_{i\in I}X^i\]
+    is a stable equivalence.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+(i) We prove first the special case of two summands $A$ and $B$. Consider the long exact mapping cone sequence associated to the inclusion $i_A:A\to A\vee B$
+\[\cdots\to\pi_k(A)\xto{(i_A)_*}\pi_k(A\vee B)\xto{(i_{i_A})_*}\pi_k(C(i_A))\xto{\delta}\pi_{k-1}(A)\to\cdots.\]
+The retraction $r:A\vee B\to A$ to $i_A$ decomposes the long exact sequence into short exact sequences, and there are homotopy equivalences $C(i_A)\cong(CA)\vee B\cong B$, thus we get short exact sequences \[
+\begin{tikzcd}
+0 \arrow[r] & \pi_k(A) \arrow[r, "(i_A)_*"] & \pi_k(A \vee B) \arrow[l, bend left, "r_*"] \arrow[r, " (\operatorname{proj}_B)_*"] & \pi_k(B) \arrow[r] \arrow[l, "(i_B)_*", bend left] & 0
+\end{tikzcd}.\]
+
+Now let $I$ be arbitrary. We consider
+\[
+\begin{tikzcd}
+\bigoplus_{i \in I} \pi_k(X^i) \arrow[r] \arrow[rr, bend right=25, "\text{canonical}"', hook] & \pi_k \left( \bigvee_{i \in I} X^i \right) \arrow[r] & \prod_i \pi_k(X^i)
+\end{tikzcd}.
+\]
+In $\Ab$ the canonical map is always injective. Thus, also $\bigoplus_{i \in I} \pi_k(X^i) \into \pi_k \left( \bigvee_{i \in I} X^i \right)$ is.
+
+To prove surjectivity, let $f:S^{n+k} \to \bigvee_{i \in I} X_n^i$ represent an element in $\pi_k \left( \bigvee_{i \in I} X^i \right)$. Since $S^{n+k}$ is compact,\rightnote{This is a standard argument, but one has to take care of some point-set subtleties to make sure that it works in this (possibly not Hausdorff) setting.} by \cite[Proposition A.18]{schwede} there is a finite subset $J \subseteq I$ such that $\im{f} \subseteq \bigvee_{i \in J} X_n^i$, hence surjectivity follows from the finite index case by considering
+\begin{center}
+\begin{tikzcd}
+\bigoplus_{i \in J} \pi_k(X^i) \arrow[r] \arrow[d] & \pi_k \left( \bigvee_{i \in J} X^i \right) \arrow[d]\\
+\bigoplus_{i \in I} \pi_k(X^i) \arrow[r] & \pi_k \left( \bigvee_{i \in I} X^i \right)
+\end{tikzcd}
+\end{center}
+
+(ii) Fix a finite index set $I$. For all $k,n$ such that $k+n\geq0$, the natural map
+\[\pi_{n+k}\left(\prod_{i\in I}X^i_n\right)\to\prod_{i\in I}\pi_{n+k}(X^i_n)\]
+is bijective. Since finite products commute with filtered colimits, we also get a product decomposition in the colimit as $n\to\infty$.
+
+(iii) Again, let $I$ be finite. Since in $\Ab$ finite direct sums agree with finite products, we have an isomorphism
+\[\textstyle\bigoplus_{i\in I}\pi_k(X^i)\xto{\cong}\pi_k(\bigvee_{i\in I}X^i)\to\pi_k(\prod_{i\in I} X^i)\xto{\cong}\prod_{i\in I}\pi_n(X^i)\]
+where the first map is an isomorphism by (i) and the third by (ii). Hence the central morphism is also an isomorphism.
+\end{proof}
+
+\begin{example}
+The finiteness hypotheses in the last two points of last proposition cannot be dropped, as shown in the following example. Let $\SS^{\leq i}$ be the \tit{truncated sphere spectrum}
+\[
+(\SS^{\leq i})_n=\begin{cases}
+S^n & n\leq i\\
+* & n>1
+\end{cases}
+\]
+with $\pi_k(\SS^{\leq i})=0$ for all $k,i$.  Hence we have $\prod_{i\geq1}\pi_k(\SS^{\leq i})=0$. On the other hand the group $\pi_0(\prod_{i\geq 1}\SS^{\leq i})$ is the colimit of the sequence of maps
+\[\prod_{i\geq n}\pi_n(S^n)\to\prod_{i\geq n+1}\pi_{n+1}(S^{n+1})\]
+which are the composition of the projection away from the first factor and then the product of the suspension morphisms $\pi_n(S^n)\to\pi_{n+1}(S^{n+1})$, so
+\[\textstyle\pi_0(\prod_{i\geq 1}\SS^{\leq i}) = \colimit_n \pi_n(\prod_{i\geq1}\SS^{\leq i}_n) = \displaystyle\frac{\prod_{k \in \N} \Z}{\bigoplus_{k \in \N} \Z} \neq 0. \]
+\end{example}
+
+Now that we have the long exact sequences associated to the mapping cone and the homotopy fiber constructions we can also update Corollary \ref{corollary:loop-and-suspension-of-stable-equivalence} as follows.
+
+\begin{corollary}
+For a morphism $f:X\to Y$ of orthogonal spectra, the following are equivalent:
+\begin{itemize}
+    \item[(i)] the morphism $f$ is a stable equivalence,
+    \item[(ii)] the mapping cone $Cf$ has trivial homotopy groups,
+    \item[(iii)] the suspension $f\smsh S^1$ is a stable equivalence,
+    \item[(iv)] the shift $\sh f$ is a stable equivalence,\rightnote{\upshape Point (iv) follows from point (iii) since the $\lambda$-maps are stable equivalences.}
+    \item[(v)] the loop $\Omega f$ is a stable equivalence,
+    \item[(vi)] the homotopy fibre $Ff$ has trivial homotopy groups.
+\end{itemize}
+\end{corollary}

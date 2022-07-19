@@ -1,0 +1,82 @@
+% Lecture 8
+
+\subsection{Multiplication on Homotopy Groups}
+
+\lecture[I wasn't to this lecture, but it isn't the most interesting: they spent most of it showing that the homotopy groups of a ring spectrum are a graded ring and related results.]{2022-05-09}
+
+Let $M$ be left module over the ring spectrum $R$. We define a pairing
+\[-\cdot-:\pi_k(R)\times\pi_l(M)\to\pi_{k+l}(M)\]
+for $k,l\in\Z$ as follows. Let $f:S^{m+k}\to R_m$, $g:S^{n+l}\to M_n$ represent homotopy classes of elements in $\pi_k(R)$ and $\pi_l(M)$ respectively. We define $f\cdot g$ to be the composite
+\[S^{m+k+n+l}\xto{f\smsh g}R_m\smsh M_n\xto{\alpha_{m,n}}M_{m+n}\]
+and we set\rightnote{Morally, adding a\vspace{-0.4ex} $(-1)^{kn}$ switches the $m+k+n+l$ coordinates around, to have the $k+l$\\ at the end.}
+\[[f]\cdot[g]:=(-1)^{kn}[f\cdot g].\]
+
+Most of this lecture will be devoted to study the properties of this pairing (starting from well-definedness), which we collect in the next theorem.
+
+\begin{theorem}
+Let $R$ be an orthogonal ring spectrum and $M$ a left $R$-module.
+\begin{rmnumerate}
+    \item The pairing $-\cdot-$ is well-defined and biadditive.
+    \item Let $1\in\pi_0(R)$ denote the class of the unit $\iota_0:S^0\to R_0$, i.e. the map with $0\mapsto\iota$ and $\infty\mapsto*$. Then, $1\cdot x=x$ for all $\pi_l(M)$.
+    \item For all $x\in\pi_i(R)$, $y\in\pi_k(R)$ and $z\in\pi_m(M)$, we have $(x\cdot y)\cdot z=x\cdot(y\cdot z)$.
+    \item For $M=R$ the pairing $-\cdot-$ makes $\pi_*(R)=\cb{\pi_k(R)}_{k\in\Z}$ into a graded ring. If $R$ is commutative, then the graded multiplication satisfies $x\cdot y=(-1)^{kl}y\cdot x$ with $x\in\pi_k(R)$, $y\in\pi_l(R)$.
+    \item The pairing $-\cdot-$ make $\pi_*(M)=\cb{\pi_k(M)}_{k\in\Z}$ into a graded left module over $\pi_*(R)$.
+    \item For every morphism $\phi:M\to N$ of left modules, the induced map $\phi_*:\pi_k(M)\to\pi_k(N)$ for $k\in\Z$ form a morphism of graded $\pi_*(R)$-modules. In other words, we have enhanced the functor $\pi_*:\Sp\to\Ab$ to a functor
+    \[\pi_*:\RMod\to{}_{\pi_*(R)\!}\operatorname{GrMod}.\]
+    \item The suspension and loop isomorphisms
+    \[-\smsh S^1:\pi_k(M)\to\pi_{k+1}(M\smsh S^1)\text{ and }\alpha:\pi_k(\Omega M)\to\pi_{k+1}(M)\]
+    are $\pi_*(R)$-linear.
+    \item For every morphism $f:M\to N$ of left $R$-modules, the connecting morphism
+    \[\delta:\pi_{k+1}(Cf)\to\pi_k(M)\text{ and }\delta:\pi_{k+1}(N)\to\pi_k(Ff)\]
+    are $\pi_*(R)$-linear.
+\end{rmnumerate}
+\end{theorem}
+
+\begin{proof}
+This proof is \tit{extremely} boring, I cannot bring myself to study it.
+\end{proof}
+
+\subsection{Examples of Ring Spectra}
+
+\begin{example}[Sphere spectrum]
+Let $\mu_{V,W}:S^V\smsh S^W\xto{\cong}S^{V\oplus W}$ be the canonical isomorphism. In AT2Sheet4.4 we prove that the functor ${}_{\SS\!}\Mod(\Sp)\to\Sp$ is an isomorphism of categories. The sphere spectrum $\SS$ is a commutative orthogonal ring spectrum and it is the initial ring spectrum.
+\end{example}
+
+
+\begin{example}
+Let $M$ be a topological monoid (e.g. any monoid with the discrete topology) and $R$ a ring spectrum. The \tit{monoid ring spectrum $RM$} is $R\smsh M_+$ with multiplication maps
+\[\mu_{V,W}^{RM}:(RM)(V)\smsh(RM)(W)\to RM(V\oplus W) = R(V\oplus W)\smsh M_+ \]
+given by
+\begin{center}
+\small
+\begin{tikzcd}
+(RM)(V) \smsh (RM)(W) \arrow[rrd, "{\mu_{V,W}^{RM}}", swap, dashed, bend right] \arrow[r, eq] & (R(V) \smsh M_+) \smsh (R(W) \smsh M_+) \arrow[r, "\cong"] & (R(V) \smsh R(W)) \smsh (M \times M)_+ \arrow[d, "{\mu_{V,W} \smsh \operatorname{mult}_+}"]\\
+ & & R(V \oplus W) \smsh M_+.
+\end{tikzcd}
+\end{center}
+Here, observing that $K_+ \smsh L_+ \cong (K \times L)_+$,
+\begin{align*}
+(R(V) \smsh M_+) \smsh (R(W) \smsh M_+) &\xrightarrow{\cong} (R(V) \smsh R(W)) \smsh (M \times M)_+,\\
+(r \smsh m) \smsh (\ol{r} \smsh \ol{m}) &\mapsto (r \smsh \ol{r}) \smsh (m, \ol{m}).
+\end{align*}
+\noindent If $\iota$ is the unit map for $R$, then the unit maps for $RM$ are given by
+\[ S^V \to (RM)(V) = R(V) \smsh M_+, \ v \mapsto \iota_V(v) \smsh 1. \]
+Special case: Set $R = \SS$, then $\SS M$ is the \tit{spherical monoid ring}. Its underlying orthogonal spectrum is $\Sigma_+^{\infty}M = \Sigma^{\infty}(M_+)$.
+\end{example}
+
+\begin{exercise}
+There is an isomorphism of categories
+\[{}_{\SS M\!}\Mod(\Sp)\cong(\Sp,\text{continuous action of $M$ by endomorphisms}).\]
+\end{exercise}
+
+\begin{example}[Eilenberg-MacLane spectra]
+Let $A$ be a ring and $M$ be a left $A$-module (in the cowardly old) sense. Then, $HA$ acts on $HM$ by
+\[\alpha_{V,W}:(HA)(V)\smsh(HM)(W)\to(HM)(V\oplus W)\]
+given by
+\[A\left[S^V\right] \smsh M\left[S^W\right] \to M\left[S^{V \oplus W}\right],\ \sum_i a_i v_i\smsh\sum_j m_j w_j\to\sum_{i,j}(a_i\cdot m_j)\cdot(v_i\smsh w_j)\]
+and unit maps
+\[\iota_V:S^V\to(HA)(V)=A\left[S^V\right],\ v\to1\cdot v.\]
+This gives a functor
+\[H:\Ring\to\Sp,\ H_A:{}_{A\!}\Mod\to{}_{HA\!}\Mod(\Sp).\]
+We sneaked in all of algebra in homotopy theory.
+\end{example}

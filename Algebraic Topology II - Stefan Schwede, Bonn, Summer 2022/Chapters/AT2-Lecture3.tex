@@ -1,0 +1,163 @@
+% Lecture 3
+
+\section{Orthogonal Spectra, Coordinate-free}
+
+\lecture[We give the \enquote{real} definition of orthogonal spectra, which is \enquote{coordinate free}. Then we start studying them more in detail.]{2022-04-20}
+
+For the sake of (?)\rightnote{AT2Sheet2.2 shows that there is an equivalence of categories between orthogonal spectra and their coordina-\\tized version, so it is not entirely obvious to me why this definition is better... I guess we get a nicer theory by seeing spectra as functors?}, we want now to go coordinate-free and define orthogonal spectra without referencing $\R_n$, replacing it everywhere with an inner product space $V$.
+
+\begin{definition}
+An \tit{inner product space} is just a finite-dimensional Euclidean vector space.
+\end{definition}
+
+\noindent
+The idea is to make the following changes to the definition of orthogonal spectra:
+\begin{itemize}
+    \item $X_n$ becomes $X(V)$ for an inner product space $V$,
+    \item the action of $O(n)$ on $X_n$ is replaced by the action of $O(V)$ on $X(V)$,
+    \item the structure maps $\sigma^m:S^m\smsh X_n\to X_{m+n}$ become maps $S^V\smsh X(W)\to X(V\oplus W)$, where $S^V=V\cup\cb{\infty}$ with the one-point compactification topology.
+\end{itemize}
+More generally, we want structure maps for all linear isometric embeddings $\phi:V\into W$, given as maps
+\[\phi_*:S^{W-\phi(V)}\smsh X(V)\to X(W).\]
+
+Now we carry out the actual construction. Given inner product spaces $V,W$, let $L(V,W)$ denote the space of linear isometric embeddings. If $(\nn{v}{n})$ is an orthonormal basis of $V$, then the evaluation
+\[L(V,W)\to V_n(W)\subset W^n,\ (\phi:V\to W)\mapsto(\phi(v_1),\dots,\phi(v_n))\]
+is a bijection. We topologize $L(V,W)$ by requiring this map to be an homeomorphism. During some idle afternoon, one should check that the topology does not depend on the choice of the basis. For this topology, we have that the composition
+\[L(V,W)\times L(U,V)\to L(U,W),\ (\phi,\psi)\mapsto\phi\circ\psi\]
+is continuous. Hence we get a $\T$-enriched category.
+
+The \tit{orthogonal complement bundle} $\xi(V,W)$ over $L(V,W)$ is
+\[\xi(V,W)=\cb{(w,\phi)\in W\times L(V,W)\mid w\perp\phi(W)}\to L(V,W),\ (w,\phi)\mapsto\phi.\]
+During the same idle afternoon, one should check that this is an Euclidean vector bundle of rank $\dim W-\dim V$.
+
+We define
+\[\Or(V,W)=\Thom(\xi(V,W))=\xi(V,W)\cup\cb{\infty}\]
+with the one-point compactification topology. Note that the base space $L(V,W)$ is compact, which is why the Thom space coincides with the one-point compactification.
+
+The map
+\[\xi(V,W)\times\xi(U,V)\to\xi(U,W),\ ((w,\phi),(v,\psi))\mapsto(w+\phi(v),\phi\circ\psi)\]
+cover the composition map $L(V,W)\times L(U,V)\to L(U,W)$. If one wants his idle afternoon to turn into a non-idle one, they should check that the map we defined is continuous.\rightnote{What should go wrong anyway?} This extends continuously (one checks) to based maps
+\[\Or(V,W)\smsh\Or(U,V)\to\Or(U,W)\]
+hence one gets a based topological category $\Or$, the category of inner product spaces. The identity of $V$ in this category is $\id_V=(0,\id_V)\in\Or(V,V)$. Note also that
+\[\Or(V,V)=\xi(V,V)\cup\cb{\infty}=\cb{(0,A)\mid A\in O(V)}\cup\cb{\infty}=O(V)_+\]
+using that $O(V)$ is already compact.
+
+\begin{remark}\rightnote{This is a remark from the future (fourth lecture).}\leftnote{This remark (although sort of intuitive already) is explained better on the \href{https://www.math.uni-bonn.de/people/schwede/orthspec.pdf}{official notes}}
+If $\dim{V} = m$ and $\dim{W} = n$, then
+\[ L(V,W) \cong V_m(\R^n) \cong O(n)/O(n-m). \]
+Moreover, we obtain
+\[ \xi(V,W) \cong V_m(\R^n) \times_{O(n-m)} \R^{n-m} \]
+and
+\[ \Or(V,W) \cong V_m(\R^n)_+ \wedge_{O(n-m)} S^{n-m} = O(n)_+ \wedge_{O(n-m)} S^{n-m}.\]
+\end{remark}
+
+\begin{definition!}
+A \tit{(coordinate-free) orthogonal spectra} is a continuous ($\T_*$-enriched) based functor $X:\Or\to\T_*$.
+\end{definition!}
+
+Explicitly:
+\begin{itemize}
+    \item for all inner product spaces $V$ we get a based space $X(V)$,
+    \item we have based continuous maps\rightnote{By adjunction.}
+    \[\Or(V,W)\smsh X(V)\to X(W)\]
+    for all $V,W\in\Or$,
+    \item we have commutative diagrams
+    \[
+    \begin{tikzcd}[column sep=huge]
+    {\Or(V,W)\smsh\Or(U,V)\smsh X(U)} \ar[d,"\circ\,\smsh X(U)"] \ar[r,"{\Or(V,W)\smsh X}"] & {\Or(V,W)\smsh X(V)} \ar[d,"X"]\\
+    {\Or(U,W)\smsh X(U)} \ar[r,"X"] & X(W)
+    \end{tikzcd}
+    \]
+    for all $U,V,W\in\Or$.
+\end{itemize}
+Then, $O(V)$ acts on $X(V)$ by the composite
+\begin{align*}
+    O(V)\times X(V)&\to\Or(V,V)\smsh X(V)\xto{X}X(V)\\
+    (A,x)&\mapsto((0,A),x)
+\end{align*}
+Given two inner product spaces $V,W$, we write
+\[i_V:S^V\to\Or(W,V\oplus W),\ v\mapsto((v,0),(0,\id_W)).\]
+For every orthogonal spectrum $X$, the structure map $\sigma_{V,W}:S^V\smsh X(W)\to X(V\oplus W)$ is the composite
+\[S^V\smsh X(W)\xto{i_V\smsh\id_{X(W)}}\Or(W,V\oplus W)\smsh X(W)\xto{X}X(V\oplus W).\]
+The \tit{opposite structure map} $\sigma_{V,W}^\op:X(V)\smsh S^W\to X(V\oplus W)$ is the composite
+\[X(V)\smsh S^W\cong S^W\smsh X(V)\xto{\sigma_{W,V}}X(W\oplus V)\xto{X(\tau_{V,W})}X(V\oplus W)\]
+where $\tau_{V,W}:V\oplus W\to W\oplus V$ is the obvious isomorphism.
+
+The forgetful functor
+\[U:\Sp\to\Sp^\text{\upshape coord}\]
+is defined on objects by $(UX)_n=X(\R^n)$ (with an $O(n)$-action) and $\sigma_n:S^1\smsh X_n\to X_{1+n}$ given by
+\[S^\R\smsh X(\R^n)\to X(\R\oplus\R^n)\cong X(\R^{1+n}).\]
+
+\begin{theorem}[AT2sheet2.2]
+The forgetful functor $\Sp\to\Sp^\text{\upshape coord}$ is an equivalence of categories.
+\end{theorem}
+
+We will often specify a functor $X:\Or\to\T_*$ by specifying $X(V)$ with $O(V)$ actions along with $\sigma_{V,W}:S^V\smsh X(W)\to X(V\oplus W)$ and leave the rest implicit.
+
+\unnumpar{Suspension Spectra, Re-revisited}
+The suspension spectrum $\Sigma^\infty K$ of a based space $K$ has values $(\Sigma^\infty)(V)=S^V\smsh K$ with functoriality\todo[color=red]{Check stuff!}
+\[\Or(V,W)\smsh S^V\smsh K\to S^W\smsh K,\ (w,\phi)\smsh v\smsh k\mapsto (w+\phi(v))\smsh k.\]
+Action and structure maps are given by:
+\begin{itemize}
+    \item $O(V)\times S^V\smsh K\to S^V\smsh K,\ A(v\smsh k)=A(v)\smsh k$,
+    \item $\sigma_{V,W}:S^V\smsh X(W)\to X(V\oplus W),\ \sigma_{V,W}(v\smsh w\smsh k)=((v,0)+(0,w))\smsh k=(v,w)\smsh k$
+\end{itemize}
+similarly to the coordinatized version of suspension spectra.
+
+\unnumpar{Eilenberg-MacLane spectra, re-revisited}
+Let $A$ be an abelian group. The Eilenberg-MacLane spectrum $HA$ has values $(HA)(V)=A[S^V]$ with functoriality
+\[\Or(V,W)\smsh A[S^v]\to A[S^W],\ (w,\phi)\smsh\sum_i a_iv_i\mapsto\sum_i a_i(w+\phi(v_i)).\]
+
+\unnumpar{Thom spectra, re-revisited}
+For an inner product space $V$, let $Gr_{|V|}(V^\infty)$ denote the Grassmannian of $\dim(V)$-planes (of $V^\infty=\bigoplus_{n\geq0}V$) with the weak topology. For $V\neq0$ we have $V^\infty\cong\R^\infty$. The space $Gr_{|V|}(V^\infty)$ comes with a continuous $O(V)$-action from the coordinatized action on $V^\infty$, i.e. by $A(v_0,v_1,\dots)=(Av_0,Av_1,dots)$. Let
+\[\gamma_V:L(V,V^\infty)\to Gr_{|V|}(V^\infty),\ \phi\mapsto\phi(V)\]
+denote the tautological principal $O(\dim V)$-bundle where we again give the weak topology to $L(V,V^\infty)$.\todo[color=red]{check stuff!} We get $L(V,V^\infty)\times_{O(V)}V\to Gr_{|V|}(V^\infty)$ which is the tautological vector bundle. Then we define
+\begin{multline*}
+    (MO)(V)=L(V,V^\infty)=L(V,V^\infty)_+\smsh_{O(V)}S^V\\
+    =(L(V,V^\infty)_+\smsh S^V)/((\phi A,v)\sim(\phi, Av)\iff\phi:V\into V^\infty,\ A\in O(V),\ v\in S^V)
+\end{multline*}
+Quotients by compact topological groups do not pose topology issues, so this has the usual quotient topology.
+
+We can see that $MO(V)$ is isomorphic to $MO_n$:
+\begin{align*}
+    L(V,V^\infty)_+\smsh_{O(V)}S^V&\cong L(V,V^\infty)_+\smsh_{O(V)}(D(V)/S(V))\\
+    &=\left(\frac{L(V,V^\infty)\times D(V)}{L(V,V^\infty)\times S(V)}\right)/\sim\\
+    &=\frac{L(V,V^\infty)\times_{O(V)}D(V)}{L(V,V^\infty)\times_{O(V)}S(V)}\\
+    &=\frac{D(L(V,V^\infty)\times_{O(V)}V)}{S(L(V,V^\infty)\times_{O(V)}V)}\cong D(\gamma_n/S(\gamma_n)).
+\end{align*}
+Here, the action of $O(V)$ on $MO(V)$ is defined through the coordinate-wise action on $V^\infty$ given by $A[\phi,v]=[A^\infty\circ\phi,v]$. We get structure maps
+\[\sigma_{V,W}:S^V\smsh MO(W)\to MO(V\oplus W),\ v\smsh[\phi:W\into W^\infty,w]\mapsto[i_0\oplus\phi,(v,w)]\]
+where we define $i_+\oplus\phi$ as the composite
+\[V\oplus W\to V^\infty\oplus W^\infty\to(V\oplus W)^\infty\]
+with
+\begin{align*}
+V\oplus W\to V^\infty\oplus W^\infty&,\ (v,w)\mapsto((v,0,0,\dots),w)\\
+V^\infty\oplus W^\infty\to(V\oplus W)^\infty&,\ ((v_0,v_1,\dots),(w_0,w_1,\dots))\mapsto((v_0,w_0),(v_1,w_1),\dots).
+\end{align*}
+
+\section{Constructions in the Category of Spectra}
+
+\unnumpar{Limits and colimits in the category of spectra}\addcontentsline{toc}{subsection}{Limits and Colimits in the Category of Spectra}
+
+The category of orthogonal spectra has limits and colimits and they are constructed objectwise in $\T_*$.
+
+Let $J$ be a small category and $F:J\to\Sp$ a functor. We define the colimit in $\Sp$ of $F$ by
+\[(\colim_J F)(V)=\colim_J F(j)(V)=\colim_J\,(\ev_V\circ F)\]
+where $\ev_V:\Sp\to\T_*,\ X\mapsto X(V)$. This inherits structure maps as follows:
+\[
+\begin{tikzcd}
+S^V\smsh(\colim_JF(W)) \ar[r,dashed,"\sigma^J_{V,W}"] & \colim_JF(V\oplus W)\\
+\colim_J(S^V\smsh F(W)) \ar[u,"\cong"] \ar[ur,"\colim_{j\in J}\sigma_{V,W}^{F(j)}"']
+\end{tikzcd}
+\]
+
+A limit of $F:J\to\Sp$ can be constructed by
+\[(\lim_J F)(V)=\lim_J F(j)(V)=\lim_J\,(\ev_V\circ F)\]
+with structure maps $\sigma^J_{V,W}:S^V\smsh\lim_JF(W)\to\lim_JF(V\oplus W)$ adjoint to
+\[
+\begin{tikzcd}
+\lim_JF(W) \ar[dr,"\lim_{j\in J}\til\sigma^{F(j)}_{V,W}"'] \ar[r,dashed,"\til\sigma^J_{V,W}"] & \map_*(S^V,\lim_JF(V\oplus W)) \ar[d,"\cong"]\\
+ & \lim_J\map_*(S^V,F(V\oplus W))
+\end{tikzcd}
+\]
+where for an orthogonal spectrum $X$, the map $\til\sigma_{V,W}:X(W)\to\map_*(S^V,X(V\oplus W))$ is the adjoint of the structure map $\sigma_{V,W}:S^V\smsh X(W)\to X(V\oplus W)$.

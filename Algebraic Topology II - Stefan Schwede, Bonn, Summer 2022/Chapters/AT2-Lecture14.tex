@@ -1,0 +1,150 @@
+% Lecture 14
+
+\section{An Explicit Description of Hom-sets in the Stable Homotopy Category}
+
+\lecture[]{2022-06-01}
+
+It is usually really difficult to describe Hom-sets of derived categories, but in our case we can say something meaningful.
+
+\begin{construction}
+Let $E$ be a sequential spectrum and $A$ a based space. Set
+\[E\cb{A}=\colimit_n[S^n\smsh A,E_n]_*\]
+with the colimit taken over the maps
+\[[S^n\smsh A,E_n]\xto{S^1\smsh-}[S^1\smsh S^n\smsh A,S^1\smsh E_n]\xto{(\sigma_n)_*}[S^{1+n}\smsh A,E_{1+n}].\]
+\end{construction}
+
+\begin{remark}
+For $n\geq2$, $[S^n\smsh A,E_n]$ has an abelian group structure by \enquote{pinching}, i.e. given $f,g:S^n\smsh A\to E_n$ we add them via
+\[S^n\smsh A\xto{\text{pinch}}(S^n\vee S^n)\smsh A\cong(S^n\smsh A)\vee(S^n\smsh A)\xto{f+g}E_n.\]
+For $n\geq2$, the stabilization maps are group homomorphisms, hence $E\cb{A}$ is an abelian group.
+\end{remark}
+
+\begin{remark}
+If $A=S^k$, we have $S^n\smsh S^k\cong S^{n+k}$ so $[S^n\smsh S^k,E_n]_*\cong\pi_{n+k}(E_k)$, hence
+\[E\cb{S^k}\cong\pi_k(E).\]
+More generally
+\begin{align*}
+    E\cb{A}=\colimit_n[S^n\smsh A,E_n]_*&\cong\colimit[S^n,\map_*(A,E_n)]_*\\
+    &=\colimit_n\pi_n(\map_*(A,E_n))\\
+    &=\pi_0(\map_*(A,E)).
+\end{align*}
+\end{remark}
+
+If $A$ admits the structure of a finite CW-complex, then $\map_*(A,-)$ preserves stable equivalences (), hence
+\[\pi_0(\map_*(A,-))\cong(-)\cb{A}:\Sp^\N\to\Ab\]
+takes stable equivalences to isomorphisms.
+
+\begin{definition}
+Let $R$ be an orthogonal ring spectrum and $A$ a based space. The \tit{tautological class} $\iota_A\in (R\smsh A)\cb{A}$ is the class represented by
+\[\iota_0\smsh A:S^0\smsh A\to R(0)\smsh A.\]
+\end{definition}
+
+\begin{theorem}
+Let $R$ be an orthogonal ring spectrum and $A$ a based space that admits the structure of a finite CW-complex.
+\begin{rmnumerate}
+    \item The functor $(-)\cb{A}:\prescript{}{R}{\Mod}\to\Ab$ takes stable equivalences to isomorphisms.
+    \item Let $\Phi:\prescript{}{R}{\Mod}\to\Set$ be any functor that takes stable equivalences to isomorphisms. Then evaluation at $\iota_A$ is a bijection
+    \[\Nat_{\prescript{}{R}{\Mod}\to\Set}((-)\cb{A},\Phi)\cong\Phi(R,A)\]
+    \[\tau:(-)\cb{A}\to\Phi\mapsto\tau_{R\smsh A}(\iota_A)\]
+    \item The pair $(R\smsh A,\iota_A)$ represents the functor
+    \[\Dd(R)\to\Set,\ M\mapsto M(A)\]
+\end{rmnumerate}
+\end{theorem}
+
+\begin{examples}
+We have
+\[\Dd(R)(R\smsh A,M)\cong M\cb{A}=\colimit_m[S^n\smsh A,M_n]\]
+\[\SH(\Sigma^\infty A,M)\cong\colimit_n[S^n\smsh A,M_n]\]
+and for $A=S^k$
+\[\Dd(R)(R\smsh S^k,M)\cong\pi_k(M)\]
+\[\SH(\Sigma^\infty S^k,M)\cong\pi_k(M).\]
+\end{examples}
+
+\begin{proof}
+(ii) Injectivity. Let $\tau:(-)\cb{A}\to\Phi$ be any natural transformation. Let $M$ be any $R$-module and let $f:S^n\smsh A\to M_n$ be any based continuous map, representing a class in $M\cb{A}$. Let $f^\flat:A\to\Omega^n M_n$ be the adjoint of $f$. Then there is a unique morphism of $R$-modules
+\[f^\#:R\smsh A\to\Omega^n\sh^n M\]
+such that the composite
+\[A\xto{\iota\smsh-}R(0)\smsh A\xto{f^\#(0)}(\Omega^n\sh^n M)(0)=\Omega^n M(\R^n)=\Omega^n M_n\]
+is $f^\flat$. The value of $f^\#$ at an inner product space $V$ is
+\[R(V)\smsh A\xto{R(V)\smsh f^\flat}R(V)\smsh\Omega^n M(\R^n)\xto{\alpha_{V,\R^n}}(\Omega^n M)(V\oplus\R^n)=(\Omega^n\sh^n M)(V).\]
+The map satisfies
+\[f^\#\cb{A}(\iota_A)=\til\lambda^n\cb{A}[f]\]
+where $\til\lambda^n_M:M\xto{\sim}\Omega^n\sh^n M$ is the adjoint of $\lambda^n_M:M\smsh S^n\xto{\sim}\sh^n M$.
+
+\[
+\begin{tikzcd}[column sep=huge]
+(R\smsh A)\cb{A} \ar[d,"\tau_{R\smsh A}"'] \ar[r,"f^\#\cb{A}"] & (\Omega^n\sh^n M)\cb{A} \ar[d,"\tau_{\Omega^n\sh^n M}"] & M\cb{A} \ar[l,"\til\lambda^n_M\cb{A}","\cong"'] \ar[d,"\tau_M"]\\
+\Phi(R\smsh A) \ar[r,"\Phi(f^\#)"'] & \Phi(\Omega^n\sh^n M) & \Phi(M) \ar[l,"\Phi(\til\lambda^n_M)"',"\cong"]
+\end{tikzcd}
+\]
+So
+\[\Phi(f^\#)(\tau_{R\smsh A}(\iota_A))=\tau_{\Omega^n\sh^n M}(f^\#\cb{A}(\iota_A))=\tau_{\Omega^n\sh^n M}(\til\lambda^n_M\cb{A}[f])=\Phi(\til\lambda^n_M)(\tau_M[f])\]
+hence
+\[\tau_M[f]=\Phi(\til\lambda^n_M)^\inv(\Phi(f^\#)(\tau_{R\smsh A}(\iota_A))).\]
+
+Surjectivity. let $y\in\Phi(R\smsh A)$ be any element. We want to construct a natural transformation $\tau:(-)\cb{A}\to\Phi$ such that $\tau_{R\smsh A}=y$. Let $M$ be any $R$-module and let $f:S^n\smsh A\to M_n$ represent any given class in $M\cb{A}$. Then we define
+\[\tau_M[f]:=\Phi(\til\lambda^n_M)^\inv(\Phi(f^\#)(y)).\]
+This is well defined as it does not change if we change $f$ by a homotopic $f'$ or if we stabilize $f$ to $\sigma_n\circ(S^1\smsh f)$. We show the second claim. The following diagram commutes
+\[
+*****
+\]
+So
+\begin{align*}
+    \Phi(\til\lambda)^\inv(\Phi(f^\#)(y))&=(\Phi(\til\lambda^{1+n}_M)^\inv\circ\Phi(\lambda_{\Omega^n\sh^n M})\circ\Phi(f^\#))(y)\\
+    &=(\Phi(\til\lambda^{1+n}_M)^\inv\circ\Phi((\sigma_n(S^1\smsh f))^\#))(y).
+\end{align*}
+
+Now we show naturality of the transformation $\tau$ we defined. Let $\psi:M\to N$ be a morphism of $R$-modules, $f:S^n\smsh A\to M_n$. The $\psi_*[f]$ is represented by $\psi_n\circ f:S^n\smsh A\to N_n$. The following diagram in $\prescript{}{M}{\Mod}$ commutes:
+\medskip
+\todo[inline,color=red]{add diagram!}
+\smallskip\noindent
+So
+\begin{align*}
+    \tau_N(\psi\cb{A}[f])&=(\Psi(\til\lambda^n_N)^\inv\circ\Phi((\psi_n\circ f)^\#))(y)\\
+    &=(\Phi(\til\lambda^n_N)^\inv\circ\Phi(\Omega^n\sh^n\psi)\circ\Phi(f^\#))(y)\\
+    &=(\Phi(\psi)\circ\Psi(\til\lambda^n_M)^\inv\circ\Phi(f^\#))(y)=\Phi(f)(\tau_M[f]).
+\end{align*}
+
+(iii) By part (ii) applied to the functor $\Dd(R)(R\smsh A,-)\circ\gamma:\prescript{}{R}{\Mod}\to\Set$ there is a unique natural transformation $\tau:(-)\cb{A}\to\Dd(R)(R\smsh A,-)$ such that
+\[\tau_{R\smsh A}(\iota_A)=\id_{R\smsh A}.\]
+The Yoneda lemma provides a unique natural transformation $j:\Dd(R)(R\smsh A,-)\to(-)\cb{A}$ such that $j_{R\smsh A}(\id_{R\smsh A})=\iota_A$. Then...
+
+\medskip
+\todo[inline,color=red]{finish typing up!}
+\smallskip
+
+\end{proof}
+
+\begin{remark}
+We already remarked that as special case of the theorem we have
+\[\Dd(R)(R\smsh S^n,M)\cong M\cb{A}=\pi_n(M)\]
+\[\SH(\Sigma^\infty S^n,A)\cong\pi_n(M)\]
+In particular,
+\begin{align*}
+    \SH(\Sigma^\infty S^k\smsh A,HB)\cong HB\cb{S^k\smsh A}&=\colimit_n[S^{n+k}\smsh A,(HB)_n]_*\\
+    &\cong\colimit_n \til H^{n+k}(S^n\smsh A,B)\cong H^k(A;B)
+\end{align*}
+where we consider representability of cohomology and the suspension isomorphism.
+\end{remark}
+
+\section{Triangulated Categories}
+
+Let $\T$ be a category equipped with an autoequivalence $\Sigma:\T\to\T$. A \tit{triangle} in $J$ is a triple $(f,g,h)$ of composable morphisms
+\[A\xto{f}B\xto{g}C\xto{h}\Sigma A.\]
+A \tit{morphism of triangles} $(f,g,h)\to(f',g',h')$ is a triple of morphisms $a:A\to A'$, $b:B\to B'$, $c:C\to C'$ such that
+\[youguesswhat\]
+commutes.
+
+\begin{definition}
+A \tit{triangulated category} consists of an additive category $\T$, an autoequivalence $\Sigma:\T\to\T$ and a class of distinguished triangles (exact triangles) that satisfy the following axioms:
+\begin{itemize}
+    \item[(T0)] The class of distinguished triangles is closed under isomorphisms.
+    \item[(T1)] Every morphism of $f$ occurs in a distinguished triangle $(f,g,h)$.
+    \item[(T2)] For every object $X$, the triangle $(0,\id_X,0)$ is distinguished.
+    \item[(T3)] Rotation axiom. If $(f,g,h)$ is distinguished, such is $(g,h,-\Sigma f)$.
+    \item[(T4)] Completion of triangles\todo[color=red]{Add!!!}.
+    \item[(T5)] Octahedral axiom\todo[color=red]{Add!!!}.
+\end{itemize}
+\end{definition}
+
+\todo[inline,color=red]{Some remarks to be made here...}

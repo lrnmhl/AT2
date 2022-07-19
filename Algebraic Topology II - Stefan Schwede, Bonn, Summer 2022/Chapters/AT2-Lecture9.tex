@@ -1,0 +1,67 @@
+% Lecture 9
+
+\begin{example}\lecture[Many ring spectra! Then at the end we introduce the ideas surrounding the stable homotopy category, ideas which will keep us occupied for while.]{2022-05-11}
+The \tit{opposite ring spectrum} $R^\op$ of an orthogonal ring spectrum $R$ has the same underlying orthogonal spectrum and unit maps, but we define a new multiplication
+\[
+\mu^\op_{V,W}R^\op(V)\smsh R^\op(W)\to R^\op(V\oplus W)\]
+by the composite
+\[R(V)\smsh R(W)\cong R(W)\smsh R(V)\xto{\mu^R_{W,V}}R(W\oplus V)\underset{R(\tau_{W,V})}{\xto{\quad\cong\quad}}R(V\oplus W)
+\]
+
+Observe that $R$ is commutative if and only if $R=R^\op$. In AT2Sheet5.3 we will show that $\pi_*(R^\op)=(\pi_*(R))^\op$, where the opposite multiplication for graded ring is defined by
+\[x\cdot_\op y=(-1)^{|x||y|}y\cdot x.\]
+\end{example}
+
+\unnumpar{Matrix ring spectra}
+Let $R$ be an orthogonal ring spectra.\rightnote{The Professor says this example is related to the first constructions one usually makes in algebraic $K$-theory, which are typically based on $\GL_n(k)$.} We define an orthogonal spectrum
+\[M_m(R)=\map_*(m_+,R\smsh m_+),\]
+where $m_+=\cb{0,1,\dots,m}$, $0$ is the basepoint and
+\[\map_*(m_+,R\smsh m_+)\cong\prod_{i=1}^m\bigvee_{j=1}^m R\]
+The multiplication maps $M_m(R)(V) \smsh M_m(R)(W) \to M_m(R)(V \oplus W)$ are given by
+\[f\smsh g\mapsto\left(m_+ \xrightarrow{f} R(V) \smsh m_+ \xrightarrow{R(V) \smsh g)} R(V) \smsh R(W) \smsh m_+ \xrightarrow{\mu_{V,W} \smsh m_+} R(V \oplus W) \smsh m_+ \right).\]
+We will see in AT2Sheet5.4 that $\pi_*(M_m(R)) \cong M_m(\pi_*(R))$.
+
+\begin{remark}
+Ideals and quotients do not generally translate easily to spectra.
+\end{remark}
+
+Now an (important) example from geometric topology.
+
+\begin{example}[MO and MOP]
+Eh.
+
+\medskip
+\todo[inline,color=red]{Coming not soon!}
+
+\end{example}
+
+\chapter{The Stable Homotopy Category}
+
+Now that we have a suitable class of spectra (as we already mentioned, there are others, but they all give rise to equivalent stable homotopy categories) we can turn to the construction of the stable homotopy category. This is the localization of the class of spectra at the stable equivalences, mimicking the construction of the classical homotopy category (and in fact it should be thought of as the \enquote{stabilization} of the latter), but in the previous years teaching this course the Professor noticed that this construction can be easily adapted to the more general setting of derived categories of ring spectra and in this class we will take this approach.
+
+\begin{definition}
+	The \tit{derived category} $D(R)$ of an orthogonal ring spectrum $R$ is the localization of the category of $R$-modules at the class of weak equivalences
+    \[\RMod[(\text{stable equivalence})^{-1}].\]
+\end{definition}
+
+\begin{remark}
+As we already remarked last semester localizations of categories always exists, but in principle only after choosing a set theoretic framework to work within (usually this would be ZFC with Grothendieck universes) and then fiddling a little with it.
+\end{remark}
+
+\begin{definition}
+The \tit{stable homotopy category} is 
+\[\SH=D(\SS)=\Sp[(\text{stable equivalences})^{-1}].\]
+\end{definition}
+
+The approach we will follow is illustrated by the following diagram
+\[
+\begin{tikzcd}
+\Ring \arrow[r, "H"] \arrow[rddd, bend right, "A \mapsto D(A) \cong D(HA)", swap] & \Ring(\Sp) \arrow[d, "R \mapsto\RMod"] \ \\
+ & (\text{stable cofibration categories}) \arrow[d, dotted] \arrow[dd, bend left = 90]\\
+ & (\text{stable $\infty$-categories}) \arrow[d, dotted]\\
+ & (\text{triangulated categories})
+\end{tikzcd}
+\]
+In particular, the passage from ring spectra to triangulated categories is by taking the derived category of a ring spectrum the way we defined it above. This process usually involves introducing \href{https://ncatlab.org/nlab/show/model+category}{model categories} (and their \href{https://ncatlab.org/nlab/show/homotopy+category+of+a+model+category}{homotopy categories}). Instead of model categories, we take the shortcut of cofibration categories, a weaker notion which is easier to set up. It is probably not possible not to include any model category type nonsense, though.
+
+We are skipping the \href{https://ncatlab.org/nlab/show/stable+\%28infinity\%2C1\%29-category}{stable $\infty$-category} part but we should keep in mind that it is there. 

@@ -1,0 +1,168 @@
+% Lecture 5
+
+\lecture[Some technical theorem about the $\lambda$-maps (which maybe we could have skipped?) and then we (toil to) prove that the mapping cone construction for spectra yields a long exact sequence of stable homotopy groups.]{2022-04-27}
+
+\noindent
+Now we prove what we claimed last time: that for orthogonal spectra the $\lambda$-maps are stable equivalences.
+
+\begin{theorem}
+Let $X$ be an orthogonal spectrum.
+\begin{itemize}
+    \item[i)] For every $h\in\Z$, the map
+    \[\pi_{k+1}(X\smsh S^1)\xto{(\lambda_X)_*}\pi_{1+k}(\sh X)=\pi_k(X)\]
+    is inverse to the suspension isomorphism up to $(-1)^k$.
+    \item[ii)] The morphism $\lambda_X:X\smsh S^1\to\sh X$ and its adjoint $\til\lambda_X:X\to\Omega\sh X$ are stable equivalences.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+(i) The composite
+\[\pi_k(X)\xto{-\smsh S^1}\pi_{k+1}(X\smsh S^1)\xto{(\lambda_X)_*}\pi_{1+k}(\sh X)=\pi_k(X)\]
+sends the class of $f:S^{n+k}\to X_n$ to the composite
+\[S^{n+k+1}\xto{f\smsh S^1}X_n\smsh S^1\cong S^1\smsh X_n\xto{\sigma_n}X_{1+n}\xto{X(\chi_{1,n})}X_{n+1}\]
+and this is equal to the composite
+\[S^{n+k+1}\xto{\chi_{1,n+k}}S^{1+n+k}\xto{S^1\smsh f}S^1\smsh X_n\xto{\sigma_n}X_{1+n}\xto{X(\chi_{1,n})}X_{n+1}\]
+which by AT2Sheet2.1 represents
+\[(-1)^{n+k}[X(\chi_{1,n})\circ\sigma_n\circ(S^1\smsh f)]=(-1)^{n+k}\det(\chi_{1,n})[\sigma_n\circ(S^1\smsh f)]=(-1)^k[f].\]
+
+(ii) The map $(\lambda_X)_*$ is an isomorphism by (i) because $-\smsh S^1$ is an isomorphism. The adjoint of $\lambda_X$ equals the composite
+\[X\xto{\eta}\Omega(X\smsh S^1)\xto{\Omega\lambda_X}\Omega\sh X\]
+and both of these maps are stable equivalences by Theorem \ref{theorem:loop-suspension-isomorphisms-and-co} and Corollary \ref{corollary:loop-and-suspension-of-stable-equivalence}.
+\end{proof}
+
+\section{Mapping Cone and Homotopy Fiber}
+
+We already noted last semester that given a map $f:A\to B$ there are strong analogies between the mapping cone $Cf$ and the homotopy fiber $Ff$. Notably, the mapping cone construction yields a long exact sequence of homology groups, while the homotopy fiber yields a long exact sequence of homotopy groups. We will see that, as with the loop-suspension adjunction, in the stable case there is some sort of convergence\rightnote{What does this mean, \tit{really?}} of homological and homotopical concepts. In particular, both the mapping cone and the homotopy fiber yield a long exact sequence of homotopy groups.
+
+\subsection{The Mapping Cone Sequence}
+
+\begin{construction}
+Let $A\to B$ be a based map of based spaces. The \tit{mapping cone}\rightnote{This is homotopy equivalent to the unreduced cone in nice enough cases.} is \[Cf=(A\smsh[0,1])\cup_{A\times1,f}B,\]
+where $[0,1]$ is based at $0$. We define 
+\[t:[0,1]\to S^1=\R\cup\cb{\infty},\ x\mapsto\frac{2x-1}{x(1-x)}\]
+which descends to a homeomorphism $[0,1]/(0\sim1)\to S^1$. The mapping cone comes with two natural continuous maps
+\[B\xto{i}Cf\xto{p}A\smsh S^1\]
+where $p$ is defined by $a\smsh X\mapsto a\smsh t(x)$ and $b\mapsto*$.
+\end{construction}
+
+We know that the mapping cone construction (for spaces) induces a long exact sequence of homology groups: our present goal is to prove that we have a long exact sequence of stable homotopy groups of spectra analogous to the old one. In order to prove the statement, we first need to prove a (if you ask me, quite terrifying) lemma which will serve as the main technical tool.
+
+\begin{lemma}\label{lemma:technical-lemma-mapping-cone}
+Let $f:A\to B$ be a continuous based map.
+\begin{rmnumerate}
+    \item The collapsing map
+    \[*\cup p:Ci=(B\smsh[0,1])\cup_{B\times1,i}Cf\to A\smsh S^1\]
+    is a based homotopy equivalence.
+    \item The square
+    \[
+    \begin{tikzcd}
+    Ci \ar[d,"*\cup p"'] \ar[r,"p\cup*"] & B\smsh S^1 \ar[d,"p\smsh\tau"]\\
+    A\smsh S^1 \ar[r,"f\smsh S^1"] & B\smsh S^1
+    \end{tikzcd}
+    \]
+    (where $\tau(x)=-x$) commutes up to based homotopy equivalences.
+    \item Let $\beta:Z\to B$ be a based continuous map such that $i\circ\beta:Z\to Cf$ is null-homotopic. Then there is a map $h:Z\smsh S^1\to A\smsh S^1$ such that
+    \[(f\smsh S^1)\circ h:Z\smsh S^1\to B\smsh S^1\]
+    is homotopic to $\beta\smsh S^1$.
+\end{rmnumerate}
+\end{lemma}
+
+\begin{proof}
+Statements (i) and (ii) follow from explicit formulas of homotopies and can be found in \cite{schwede}. For example, for (i), a homotopy inverse to $*\cup p$ is $r:A\smsh S^1\to(B\smsh[0,1])\cup_i Cf$ is the map
+\[
+r(a\smsh x)\begin{cases}
+a\smsh2x & \text{in }Cf\text{ for }0\leq x\leq 1/2\\
+f(a)\smsh(2-2x) & \text{in }B\smsh[0,1]\text{ for }1/2\leq x\leq1
+\end{cases}.
+\]
+There are explicit homotopies between the composites of $x\cup p$ and $r$ to the respective identities, we give one:\rightnote{We are allowed\vspace{-0.4ex} (even encouraged) not to read these formulas. Instead, it would be useful to try and come up with a homotopy by yourself.}
+\[[0,1]\times(B\smsh[0,1])\to Ci,\ (t,b\smsh x)\mapsto b\smsh(1-t)x\quad\text{in }B\smsh[0,1]\subset Ci\]
+{\small\[[0,1]\times(A\smsh[0,1])\to Ci,\ (t,a\smsh x)\mapsto{\begin{cases}
+a\smsh(1+t)x & \text{in }Cf\text{ for }0\leq x\leq 1/(1+t)\\
+f(a)\smsh(2-x(1+t)) & \text{in }B\smsh[0,1]\text{ for }1/(1+t)\leq x\leq1
+\end{cases}}\]}
+
+For (iii), let $H:Z\smsh[0,1]\to Cf$ be a continuous map that witnesses that $\beta\circ i$ is null-homotopic, i.e $H(z\smsh1)=i(\beta(z))$. Then we have
+\[
+\begin{tikzcd}
+Z \ar[d,"Z\smsh1"'] \ar[r,"\beta"] & B \ar[d,"i"]\\
+Z\smsh[0,1] \ar[d,"p_Z"'] \ar[r,"H"] & Cf \ar[d,"p_A"]\\
+Z\smsh S^1 \ar[r,"\exists! h"] & A\smsh S^1
+\end{tikzcd}
+\]
+so that the composite $p_A\circ H$ factors uniquely as $h\circ p_Z$ for $h:Z\smsh S^1\to A\smsh S^1$. We claim that $(f\smsh S^1)\circ h$ is homotopic to $\beta\smsh S^1$. This  would follow from
+\[(f\smsh S^1)\circ h\circ(*\cup p_Z)\simeq(\beta\smsh S^1)\circ(*\cup p_Z)\]
+since $*\cup p:CZ\cup_Z CZ\to Z\smsh S^1$ is a homotopy equivalence. Now
+\begin{align*}
+    (f\smsh S^1)\circ h\circ(*\cup p_Z)&=(f\smsh S^1)\circ(*\cup p_A)\circ((\beta\smsh[0,1])\cup H)\\
+    &\simeq(B\smsh\tau)\circ(p_B\cup*)\circ((\beta\smsh[0,1])\cup H)\\
+    &=(B\smsh\tau)\circ(\beta\smsh S^1)\circ(p_Z\cup*)\\
+    &=(\beta\smsh S^1)\circ(Z\smsh\tau)\circ(p_Z\cup*)\\
+    &\simeq(\beta\smsh S^1)\circ(*\cup p_Z)    
+\end{align*}
+where we have used (ii) two times.
+\end{proof}
+
+\begin{construction}
+Now let $f:X\to Y$ be a morphism of orthogonal (or sequential) spectra. The \tit{mapping cone} $Cf$ is a pushout
+\[
+\begin{tikzcd}
+X \ar[d,"-\smsh1"'] \ar[r,"f"] & Y \ar[d,"i"]\\
+X\smsh[0,1] \ar[r] & Cf
+\end{tikzcd}
+\]
+i.e. the mapping cone levelwise. The\rightnote{It is quite clear that the levelwise maps commute with stabilization (later, we will not even mention this most of the time).} unstable $i$ and $p$ maps, taken in every level, provide morphisms of orthogonal (or sequential) spectra
+\[X\xto{f}Y\xto{i}Cf\xto{p}X\smsh S^1.\]
+The \tit{connecting morphisms} $\delta:\pi_{k+1}(Cf)\to\pi_k(X)$ is defined to be the composite
+\[\pi_{k+1}(Cf)\xto{p_*}\pi_{k+1}(X\smsh S^1)\xto{-\smsh S^1}\pi_k(X).\]
+\end{construction}
+
+\begin{remark}
+Note that for commutative square of spectrum morphisms
+{\small\[
+\begin{tikzcd}
+X \ar[d,"a"] \ar[r,"f"] & Y \ar[d,"b"]\\
+X' \ar[r,"f'"] & Y'
+\end{tikzcd}
+\]}
+the following also commutes
+{\small\[
+\begin{tikzcd}
+\pi_{k+1}(Cf) \ar[d] \ar[r,"\delta"] & \pi_k(X) \ar[d,"a_*"]\\
+\pi_{k+1}(Cf') \ar[r,"\delta"] & \pi_k(X')
+\end{tikzcd}
+\]}
+\end{remark}
+
+\smallskip
+\begin{proposition}
+For every morphism of sequential spectra $f:X\to Y$ the sequence
+\[\cdots\to\pi_k(X)\xto{f_*}\pi_k(Y)\xto{i_*}\pi_k(Cf)\xto{\delta}\pi_{k-1}(X)\to\cdots\]
+is exact.
+\end{proposition}
+
+\begin{proof}
+Exactness at $\pi_k(Y)$. The composite $i_*\circ f_*=(i\circ f)_*$ is the zero morphism, because $i\circ f$ is levelwise constant at the basepoint. Now let $\beta:S^{n+k}\to Y_n$ represent an element in the kernel of $i_*:\pi_k(Y)\to\pi_k(Cf)$. Without loss of generality, $i_n\circ\beta:S^{n+k}\to Y_n\to Cf_n$ is null-homotopic. Part (iii) of Lemma \ref{lemma:technical-lemma-mapping-cone} provides a continuous based map $h:S^{n+k+1}\to X_n\smsh S^1$ such that $(f_n\smsh S^1)\circ h\simeq\beta\smsh S^1$. Hence the composite
+\[\til h:S^{1+n+k}\xto{\chi_{1,n+k}}S^{n+k+1}\xto{h}X_n\smsh S^1\xto{\cong}S^1\smsh X_n\]
+is such that $(S^1\smsh f_n)\circ\til h\simeq S^1\smsh\beta$. Then $\sigma_n\circ h:S^{1+n+k}\to X_{1+n}$ represents a class in $\pi_k(X)$ such that
+\[f_*[\sigma_n\circ\til h]=[f_{1+n}\circ\sigma_n\circ\til h]=[\sigma_n\circ(S^1\smsh f_n)\circ\til h]=[\sigma_n\circ(S^1\smsh\beta)]=[\beta]\]
+so $\ker(i_*)=\im(f_*)$.
+
+Exactness at $\pi_k(Cf)$. We compare the long exact sequence for $f$ to the long exact sequence for $i_f:Y\to Cf$ with a rotation. The collapse maps provide the map
+\[*\cup p:Ci:CY\cup Cf\to X\smsh S^1,\]
+which is a levelwise homotopy equivalence (by Lemma \ref{lemma:technical-lemma-mapping-cone}.i), so $f$ induces isomorphisms of all homotopy groups. From the diagram
+\[
+\begin{tikzcd}
+Cf \ar[r,"i_{i_f}"] \ar[dr,"p_f"'] & Ci_f \ar[d,"*\cup p_f"] \ar[r,"p_{i_f}"] & Y\smsh S^1 \ar[d,"Y\smsh\tau"]\\
+ & X\smsh S^1 \ar[r,"f\smsh S^1"'] & Y\smsh S^1
+\end{tikzcd}
+\]
+where the right square commutes up to homotopy (by Lemma \ref{lemma:technical-lemma-mapping-cone}.ii) we get
+\[
+\begin{tikzcd}[column sep=huge]
+\pi_k(Y) \ar[d,eq] \ar[r,"(i_f)_*"] & \pi_k(Cf) \ar[d,eq] \ar[r,"(i_{i_f})_*"] & \pi_k(Ci) \ar[d,"(-\smsh S^1)\circ(*\cup p)","\cong"'] \ar[r,"\delta"] & \pi_{k-1}(Y) \ar[d,"-1","\cong"']\\
+\pi_k(Y) \ar[r,"(i_f)_*"'] & \pi_k(Cf) \ar[r,"\delta"'] & \pi_{k-1}(X) \ar[r,"f_*"'] & \pi_{k-1}(Y)
+\end{tikzcd}
+\]
+where the upper row is exact at $\pi_k(Cf)$ by the previous part applied to $i:Y\to Cf$. Hence the lower row is exact at $\pi_k(Cf)$. But this means the upper row is exact at $\pi_k(C_i)$, so in turn the lower row is also exact at $\pi_{k-1}(X)$.
+\end{proof}

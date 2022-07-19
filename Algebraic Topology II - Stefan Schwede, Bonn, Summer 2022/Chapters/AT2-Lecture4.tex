@@ -1,0 +1,187 @@
+% Lecture 4
+
+\subsection{Suspension and Loop}
+
+\lecture[We study the suspension-loop adjunction for spectra, showing in particular that they become \enquote{inverse to each other up to homotopy}, which is the beginning of stable homotopy theory, in a sense. Afterwards, we construct the shift functor and we study some of its properties.]{2022-04-25}
+
+Let $F:\T_*\to\T_*$ be a continuous based functor. For every orthogonal spectrum $X$, the composite
+\[\O\xto{X}\T_*\xto{F}\T_*\]
+is another orthogonal spectrum. The same can be done on morphisms (which are natural transformations), so we obtain a functor $F\circ-:\Sp\to\Sp$.
+
+Given a based space $A$, smashing with $-\smsh A$ and maps from $\map_*(A,-)$ are an adjoint functor pair
+\[
+\begin{tikzcd}[column sep=huge]
+\T_* \ar[r,shift left,"-\smsh A"] & \T_* \ar[l,shift left,"{\map_*(A,-)}"]
+\end{tikzcd}
+\]
+which extend to an adjoint\rightnote{To check that these are indeed adjoint functors, notice that we can define unit and counit levelwise using the unit and counit\\ of the original adjunction.} functor pair
+\[
+\begin{tikzcd}[column sep=huge]
+\Sp \ar[r,shift left,"-\smsh A"] & \Sp. \ar[l,shift left,"{\map_*(A,-)}"]
+\end{tikzcd}
+\]
+More concretely, this means that for an orthogonal spectrum $X$ we get an orthogonal spectrum
+\[(X\smsh A)(V)=X(V)\smsh A\]
+with structure maps
+\[S^V\smsh(X\smsh A)(W)=S^V\smsh X(W)\smsh A\xto{\sigma^X_{V,W}\smsh A}X(V\oplus W)\smsh A=(X\smsh A)(V\oplus W)\rightnote{We will be sporty with parentheses (because thanks to the symmetric monoidal structure on the category $\T_*$ we can pretend\\ we have strict associativity).}\]
+and an orthogonal spectrum
+\[\map_*(A,X)(V)=\map_*(A,X(V))\]
+with structure maps
+\begin{align*}
+    S^V\smsh\map_*(A,X(W))&\to\map_*(A,S^V\smsh X(W))\xto{\map_*(A,\sigma^X_{V,W})}\map_*(A,X(V\oplus W))\\
+    v\smsh f&\mapsto\cb{a\mapsto v\smsh f(a)}
+\end{align*}
+
+Now we will study the special case $A=S^1$ in more detail, a new version of the good old\rightnote{Unstably, we have that in some sense suspension is good with (co-)homology and loop is good with homotopy groups. We will\\ see that stably\\ they behave\\\vspace{-0.1em} the same.} loop-suspension adjunction
+\[
+\begin{tikzcd}[column sep=huge]
+\Sp \ar[r,shift left,"-\smsh S^1"] & \Sp. \ar[l,shift left,"{\map_*(S^1,-)}"]
+\end{tikzcd}
+\]
+We will see that stably (i.e. for spectra), loop and suspension are \enquote{inverse up to homotopy}.
+
+Note that this part of the story works in general for sequential spectra. So let $X$ be a sequential spectrum. The adjunction isomorphism is
+\begin{align*}
+    \alpha:\pi_{n+k}(\Omega X_n)=\pi_{n+k}(\map_*(S^1,X_n))&\cong\pi_{n+k+1}(X_n)\\
+    [f:S^{n+k}\to\map_*(S^1,X_n)]&\mapsto[\hat f:S^{n+k+1}\to X_n]
+\end{align*}
+where $\hat f(x\smsh t)=f(x)(t)$ for $x\in S^{n+k},\ t\in S^1$. It is easy to check\rightnote{Checking compatibility\\ (in this and the next paragraph)\\ is just a matter\\ of unravelling definitions and carefully keeping track of the side\vspace{-0.1ex}\\ we suspend on.} that these bijections are compatible with stabilization. Moreover, for large enough $n+k$ they are group isomorphisms. Hence in the colimit over $n$, these bijections induce an isomorphism of groups
+\[\alpha:\pi_k(\Omega X)\xto{\cong}\pi_{k+1}(X).\]
+
+The maps
+\begin{align*}
+    -\smsh S^1:\pi_{n+k}(X_n)&\to \pi_{n+k+1}(X_n\smsh S^1)\rightnote{Note that\\\vspace{-0.3em} we smash with $S^1$ \tit{on the left}. This is often crucial and it is useful to keep track of it by writing the $+1$\\ on the right.}\\
+    [f:S^{n+k}\to X_n]&\mapsto[f\smsh S^1:S^{n+k+1}\to X_n\smsh S^1]
+\end{align*}
+are also compatible with stabilization and they induce a morphism
+\[-\smsh S^1:\pi_k(X)\to\pi_{k+1}(X\smsh S^1),\]
+the suspension morphism.
+
+The next theorem is a fundamental one, possibly the \enquote{real} beginning of stable homotopy theory: we will show that we are \enquote{inverting} the suspension functor, i.e. making it into an equivalence of categories (contrast this with spaces, where for example there are no nontrivial maps $S^1\to S^0$, but suspending twice leads us to consider maps $S^3\to S^2$, of which the Hopf fibration is a nontrivial example).
+
+\begin{theorem}\label{theorem:loop-suspension-isomorphisms-and-co}
+Let $X$ be a sequential spectrum.
+\begin{itemize}
+    \item[i)] The loop and suspension morphisms
+    \[\alpha:\pi_k(\Omega X)\to\pi_{k+1}(X)\ \text{ and }\ -\smsh S^1:\pi_k(X)\to\pi_{k+1}(X\smsh S^1)\]
+    are isomorphisms.
+    \item[ii)] The unit $\eta:X\to\Omega(X\smsh S^1)$ and counit $\epsilon:(\Omega X)\smsh S^1\to X$ of the adjunction are stable equivalences.
+    \item[iii)] For all $m\geq1$, the morphism of sequential spectra $X\smsh S^m\to X\smsh S^m$ induced by the $O(m)$-action on $S^m$ induces multiplication by the determinant on all homotopy groups.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+(i) For $\alpha$ the statement is immediate (as it is induced by bijections), so we just need to prove it for $-\smsh S^1$. To show injectivity, let $f:S^{n+k}\to X_n$ represent a class in $\pi_k(X)$ in the kernel of the suspension morphism. By increasing $n$ if necessary, we can assume without loss of generality that $f\smsh S^1:S^{n+k+1}\to X_n\smsh S^1$ is null-homotopic. Then considering\rightnote{The crux of many of these first arguments is seeing in what way $S^1\smsh-$ and $-\smsh S^1$\vspace{-0.2ex} are compatible.}
+\[
+\begin{tikzcd}
+S^{n+k+1} \ar[d,"\chi_{n+k,1}"',"\cong"] \ar[r,"f\smsh S^1"] & X_n\smsh S^1 \ar[r,"\tau","\cong"'] & S^1\smsh X_n \ar[r,"\sigma_n"] & X_{1+n}\\
+S^{1+n+k} \ar[urr,bend right=20,"S^1\smsh f"' near end] \ar[urrr,bend right=30,"\text{stabilization of }f"' near end]
+\end{tikzcd}
+\]
+where $\chi_{n+k,1}$ is the homeomorphism which swaps the last coordinate with the first $n+k$ (and thus has degree $(-1)^{n+k}$), we see that the stabilization of $f$, i.e. the composite $\sigma_n\circ(S^1\smsh f)$, is also null-homotopic, hence $f$ represents the trivial element in $\pi_k(X)$.
+
+We now show surjectivity. Let $g:S^{n+k+1}\to X_n\smsh S^1$ be any map, representing a generic class in $\pi_{k+1}(X\smsh S^1)$. We define $f:=\sigma_n\circ\tau\circ g$.
+\[
+\begin{tikzcd}
+S^{n+k+1} \ar[d,"g"'] \ar[r,"f"] & X_{1+n}\\
+X_n\smsh S^1 \ar[r,"\tau","\cong"'] & S^1\smsh X_n \ar[u,"\sigma_n"']
+\end{tikzcd}
+\]
+Then $[f]\in\pi_k(X)$ and we claim that $[f]\smsh S^1=(-1)^{k+n}[g]$.\rightnote{This might look obvious at first (and it sort of is) but formally one has to be careful...} We consider the following diagram
+\[
+\begin{tikzcd}
+S^{1+n+k+1} \arrow[d, "\chi_{1,n+k} \wedge S^1", swap] \arrow[rrd, "S^1 \wedge g", bend left]\\
+S^{n+k+1+1} \arrow[rrd, "f \wedge S^1", swap, bend right] \arrow[r, "g \wedge S^1"] & X_n \wedge S^1 \wedge S^1 \arrow[r, "\tau \wedge S^1"] & S^1 \wedge X_n \wedge S^1 \arrow[d, "\sigma_n \wedge S^1"]\\
+ & & X_{1+n} \wedge S^1
+\end{tikzcd}
+\]
+Beware that the upper half of the diagram \emph{does not}\leftnote{\tit{\enquote{A diagram does not commute\\ just because it\\ is a diagram}}\\-- W.L\"uck} commute. To remedy the failure of commutativity, we need two interchanges of the two $S^1$'s in the source and target in the upper triangle. Now, the two automorphisms involved induce $(-1)$ in the source and \emph{after suspension}\rightnote{AT2Sheet1.1 also shows that this in general will induce $(-1)$ on homotopy groups \emph{only} after suspension!} $(-1)$ on the target when taking homotopy groups (see AT2Sheet1.1).  Altogether this shows that the upper triangle commutes up to homotopy after suspension, and so the suspension map on homotopy groups is also surjective.
+
+(ii) This follows from the commutative triangles (induced by naturality of the adjunction)
+\[
+\begin{tikzcd}[column sep=1ex]
+\pi_k(\Omega X) \arrow[rr, "\alpha"] \arrow[dr, "- \wedge S^1", swap] & & \pi_{k+1}(X)
+\\ & \pi_{k+1}((\Omega X) \wedge S^1) \arrow[ur, "\epsilon_*", swap]
+\end{tikzcd}\quad
+\begin{tikzcd}[column sep=1ex]
+\pi_k(X) \arrow[rr, "- \wedge S^1"] \arrow[rd, "\eta_*", swap] & & \pi_{k+1}(X \wedge S^1) \arrow[dl, "\alpha", swap, swap]
+\\ & \pi_k(\Omega(X \wedge S^1))
+\end{tikzcd}
+\]
+which imply respectively that $\epsilon$ and $\eta$ are stable equivalences.
+
+(iii) Let $A\in O(m)$ and denote $S^A:S^m\to S^m$ the map induced by $A$ on the sphere $S^m$, with $\deg(S^A)=\det(A)\in\cb{\pm1}$. By (i), the map $-\smsh S^m:\pi_k(X)\to\pi_{k+m}(X\smsh S^m)$ is an isomorphism. So any class in $\pi_{k+m}(X\smsh S^m)$ has a representative of the form
+\[f\smsh S^m:S^{n+k+m}\to X_n\smsh S^m\]
+for some $f:S^{n+k}\to X_n$. Then
+\begin{align*}
+    (X\smsh S^A)_*[f\smsh S^m]&=[(X_n\smsh S^A)\circ(f\smsh S^m)]\\
+    &=[(f\smsh S^m)\circ(S^{n+k}\smsh S^A)]\\
+    &=\det(A)[f\smsh S^m]
+\end{align*}
+since precomposition with a degree $\det(A)$ map induces multiplication by $\det(A)$.
+\end{proof}
+
+In particular, the theorem makes precise the statement that in the stable case loop and suspension are \enquote{inverse up to homotopy}. Moreover, both loop and suspension induce isomorphisms of the stable homotopy groups. This is an instance of homology and homotopy \enquote{converging} in the stable setting (recall that unstably, suspension induces isomorphisms on homology, loop on homotopy). We will see another example later with the mapping cone and homotopy fiber sequences.
+
+The following easy corollary will be updated later.
+
+\begin{corollary}\label{corollary:loop-and-suspension-of-stable-equivalence}
+For\rightnote{\upshape On the \href{https://www.math.uni-bonn.de/people/schwede/orthspec.pdf}{official notes} there is something more: the adjunction is a bijection on stable equivalences.} every morphism of orthogonal or sequential spectra $f:X\to Y$, the following are equivalent:
+\begin{itemize}
+    \item[i)] The morphism $f:X\to Y$ is a stable equivalence,
+    \item[ii)] The morphism $\Omega f:\Omega X\to\Omega Y$ is a stable equivalence,
+    \item[iii)] The morphism $f\smsh S^1:X\smsh S^1\to Y\smsh S^1$ is a stable equivalence.
+\end{itemize}
+\end{corollary}
+
+\unnumpar{Shift}\addcontentsline{toc}{subsection}{Shift}
+Let $V$ be an inner product space. We can define a (based and continuous) functor $-\oplus V:\Or\to\Or$ by $U\mapsto  U\oplus V$ on objects and on morphisms by
+\begin{align*}
+    \Or(U,W)&\to\Or(U\oplus V,W\oplus V)\\
+    (w,\phi)&\mapsto  ((w,0),\phi\oplus V).\rightnote{One should check\vspace{-0.2em} $(w,0)\perp\im(\phi\oplus V)$. It doesn't take more than the time it takes to notice we have to check something...}
+\end{align*}
+The $V$-th shift of an orthogonal spectrum $X$ is the composite
+\[\sh^V X:\Or\xto{-\oplus V}\Or\xto{X}\T_*\]
+as a functor $\sh^V:\Sp\to\Sp$.
+More explicitly
+\[(\sh^V X)(U)=X(U\oplus V)\]
+with structure maps
+\[
+\begin{tikzcd}[row sep=small,column sep=huge]
+S^U\smsh(\sh^V X)(W) \ar[d,eq] \ar[r,"{\sigma_{U,W}^{\sh^V X}}"] & (\sh^V X)(U\oplus V) \ar[d,eq]\\
+S^U\smsh X(W\otimes V) \ar[r,"\sigma^X_{U,W\otimes V}"] & X(U\otimes W\otimes V)
+\end{tikzcd}
+\]
+
+Shift commutes on the nose with all constructions of the form $F\circ-$, for $F:\T_*\to\T_*$. For example we have
+\[(\sh^V X)\smsh A=\sh^V(X\smsh A),\ \map_*(A,\sh^V X)=\sh^V(\map_*(A,X)).\]
+There is a canonical isomorphism $\sh^V(\sh^W X)\cong\sh^{V\oplus W}X$ with component at $U$ given by the composite
+{\small\[(\sh^V(\sh^W X))(U)=(\sh^W X)(U\oplus V)=X((U\oplus V)\oplus W)\cong X(U\oplus(V\oplus W))=(\sh^{V\oplus W} X)U.\]}
+
+There is a natural morphism $\lambda^V_X:X\smsh S^V\to\sh^V X$ with components $(\lambda_X^V)_U$ given by the opposite structure maps of $X$ (with $V$ fixed)
+\[
+\begin{tikzcd}
+X(U) \wedge S^V \arrow[r, "\sigma_{UV}^{\op}"] \arrow[d, "\tau", swap] & X(U \oplus V)
+\\ S^V \wedge X(U) \arrow[r, "\sigma_{VU}", swap] & X(V \oplus U) \arrow[u,"X(\tau_{UV})", swap]
+\end{tikzcd}
+\]
+Later we will show that the morphism $\lambda^V_X$ is a stable equivalence! As a special case, for $V=\R$, we get $\sh X=\sh^\R X$, $\lambda_X=\lambda_X^\R:X\smsh S^1\to \sh X$.
+
+\begin{warning}
+There are forgetful functors $\Sp\to\Sp^\Sigma\to\Sp^\N$. On these three categories, the notion of $\lambda$-maps behaves drastically different and this is one reason to prefer working with orthogonal spectra. In particular:
+\begin{itemize}
+    \item in $\Sp$ the $\lambda$-maps exists and are $\pi_*$-isomorphism,
+    \item in $\Sp^\Sigma$ the $\lambda$-maps exist but are not $\pi_*$-isomorphisms,\rightnote{AT2Sheet3.2 asks to produce a counterexample.}\vspace{-0.4ex}
+    \item in $\Sp^\N$ there are no natural $\lambda$-maps at all.
+\end{itemize}
+Related to this, there is a popular mistake in the literature. Let $X\in\Sp^\N$ and consider $X\smsh S^1$ and $\sh X$, which are well defined in the category of sequential spectra. We have $(\sh X)_n=X_{n+1}$, hence we get
+\[
+\begin{tikzcd}
+S^1 \wedge (\sh{X})_n \arrow[r, "\sigma_n^{\sh{X}}"] \arrow[d, eq] & (\sh{X})_{1+n} \arrow[d, eq]
+\\ S^1 \wedge X_{n+1} \arrow[r, "\sigma_{n+1}", swap] & X_{1+n+1}
+\end{tikzcd}
+\]
+The mistake (which the professor has seen even in published papers) is thinking that the maps
+\[\sigma_n:(X\smsh S^1)_n=X_n\smsh S^1\xto{\tau}S^1\smsh X_n\xto{\sigma_n}X_{1+n}=(\sh X)_n\]
+assemble into a morphism of sequential spectra: they do not as the the naturality squares do not commute in general!
+\end{warning}

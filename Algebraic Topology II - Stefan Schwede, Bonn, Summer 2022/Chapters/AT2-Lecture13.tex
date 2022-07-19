@@ -1,0 +1,121 @@
+% Lecture 13
+
+\lecture[]{2022-05-30}
+
+\noindent
+The next theorem looks a lot like the dualization of the previous one (theorem \ref{proposition:homotopy-category-has-coproducts}), but as the axioms for cofibration categories are not self dual (contrary to the ones for model categories) we have to prove everything again (although the proof is surprisingly similar).
+
+\begin{theorem}
+Let $\Cc$ be a cofibration category.
+\begin{rmnumerate}
+    \item The localization functor $\gamma:\Cc\to\Ho(\Cc)$ preserves terminal objects.
+    \item Let $I$ be any set. Suppose that $\Cc$ has $I$-indexed products and weak equivalences are closed under $I$-indexed products. Then $\gamma:\Cc\to\Ho(\Cc)$ preserves $I$-indexed products. In particular $\Ho(\Cc)$ has $I$-indexed products.
+\end{rmnumerate}
+\end{theorem}
+
+\begin{proof}
+(i) Let $*\in\Cc$ be a terminal object.\rightnote{We\vspace{-0.3ex} could of course just prove (ii).} Call $p_A:A\to*$ the unique $\Cc$-morphism from an object $A$.
+Any morphism from $A$ to $*$ in $\Ho(\Cc)$ is of the form $\gamma(\tau)^\inv\circ\gamma(f)$ for some morphism $f:A\to Z$ and $\tau:*\xto{\sim}Z$ in $\Cc$ with $\tau$ a weak equivalence.
+The unique $\Cc$-morphism $p_Z:Z\to*$ is left inverse to $\tau$, so $p_Z$ is a weak equivalence by 2-out-of-3 and $\gamma(p_Z)=\gamma(\tau)^\inv$. Then
+\[\gamma(\tau)^\inv\circ\gamma(f)=\gamma(p_Z)\circ\gamma(f)=\gamma(p_Zf)=\gamma(p_A),\]
+hence there is exactly one morphism from $A$ to $*$ in $\Ho(\Cc)$.
+
+(ii) Let $\cb{X_i}_{i\in I}$ be a $I$-family of $\Cc$-products. Let $\prod_{i\in I}X_i$ be a product in $\Cc$, with $p_j:\prod_{i\in I}X_i\to X_i$ the canonical morphisms. We want to show that for all $A\in\ob(\Cc)$, the map
+\begin{align*}
+    \Ho(\Cc)(A,\ts\prod_{i\in I}X_i)&\to\ts\prod_{j\in I}\Ho(\Cc)(A,Xj)\\
+    \psi&\mapsto(\gamma(p_j)\circ\psi)_{j\in I}
+\end{align*}
+is bijective.
+
+Surjectivity. We consider an $I$-family of $\Ho(\Cc)$-morphisms $\psi_j:A\to X_j$ for $j\in I$. The calculus of fractions provides $\Cc$-morphisms $f_j:A\to Z_j$ and acyclic cofibrations $s_j:X_j\acco Z_j$ such that
+\[\psi_j=\gamma(s_j)^\inv\circ\gamma(f_j).\]
+Then
+\[\ts\prod s_j:\ts\prod_{j\in I}X_j\xto{\sim}\ts\prod_{j\in I}Z_j\]
+is another weak equivalence by assumption.
+
+We claim that the morphism $\gamma(\prod s_j)^\inv\circ\gamma((f_i)_{i\in I}):A\to\prod_{i\in I}X_i$ is a preimage of the family $(\psi_j)_{j\in I}$. In other words, the following is a commutative diagram in $\Cc$
+\[
+\begin{tikzcd}[column sep=large]
+A \arrow[r, "{(f_i)_{i \in I}}"] \arrow[dr, "f_j", swap] & \prod_{i \in I} Z_i \arrow[d, "p_j"] \arrow[rr, "\Pi_j s_j", "\sim"'] & & \prod_{i \in I} X_i \arrow[d, "p_j"]\\
+ & Z_j & & X_j \arrow[ll, "s_j", "\sim"']
+\end{tikzcd}
+\]
+Indeed,
+\[\gamma(p_j)\circ\gamma(\ts\prod s_j)^\inv\circ\gamma((f_i)_{i\in I})=\gamma(s_j)^\inv\circ\gamma(p_j)\circ\gamma((f_i)_{i\in I})=\gamma(s_j)^\inv\circ\gamma(f_j)=\psi_j.\]
+
+Injectivity. While surjectivity is (surprisingly) similar to the proof of surjectivity in theorem \ref{proposition:homotopy-category-has-coproducts}, injectivity is more difficult...
+
+\medskip
+\todo[inline,color=red]{TODO}
+\smallskip
+
+\end{proof}
+
+\section{Additive Categories}
+
+In this section we derive an important property of the derived category of an orthogonal ring spectrum: it is an additive category.\todo{Maybe expand}
+
+\begin{definition}
+A category $\Cc$ is \tit{preadditive} if it has a zero object, finite coproducts and for all pair of objects $X,Y$ the morphisms
+\[p_1=\id+0:X\ts\coprod Y\to X,\ p_2=0+\id:X\ts\coprod Y\to Y\]
+make $X\coprod Y$ into a product of $X$ and $Y$, i.e. for all $\Cc$-objects $A$, the map
+\begin{align*}
+    \Cc(A,X\ts\coprod Y)&\to\Cc(A,X)\times\Cc(A,Y)\\
+    f&\mapsto(p_1f,p_2f)
+\end{align*}
+is bijective.
+\end{definition}
+
+\begin{examples}
+Examples are of course abelian groups, modules over a ring, abelian monoids, but also $D(R)$ for $R$ a ring spectrum.
+\end{examples}
+
+\begin{remark}
+Our definition of preadditive categories is a bit different than the usual definition, i.e. an $\Ab$-enriched category with a zero object. In fact it is strictly related, as the next proposition shows (although not the same, and indeed our preadditive categories are usually called \tit{semiadditive categories} instead). It could be argued that our definition is the \enquote{right} one to give, as it makes clear that being an additive category is a property and does not come from having additional structure.
+\end{remark}
+
+\begin{construction}
+Let $\Cc$ be preadditive. Let $a,b:A\to X$ be two $\Cc$-morphisms. We denote by $a\perp b$ the unique morphism $A\to X\coprod X$ such that $p_1\circ(a\perp b)=a$ and $p_2\circ(a\perp b)=b$. The \tit{sum} of $a$ and $b$ is defined by
+\[a+b=\nabla(a\perp b)=(\id+\id)(a\perp b).\]
+\end{construction}
+
+\begin{proposition}\label{proposition:semiadditive-categories}
+Let $\Cc$ be a preadditive category.
+\begin{rmnumerate}
+    \item For all $\Cc$-objects $A,X$ the binary operation $+$ makes $\Cc(A,X)$ into an abelian monoid. Composition is biadditive.
+    \item If the shear map $\nabla\perp p_1:X\coprod X\to X\coprod X$ is an isomorphism, then $\Cc(A,X)$ is an abelian groups.
+    \item Let $F:\Cc\to\operatorname{AbMon}$ be a functor that preserves zero objects and finite coproducts. Then for all $\Cc$-objects $A,X$ and all $a\in F(a)$, the map
+    \[\Cc(A,X)\to F(X),\ f\mapsto f_*(a)=F(f)(a)\]
+    is a monoid morphism
+\end{rmnumerate}
+\end{proposition}
+
+\begin{proof}
+Eh.
+
+\medskip
+\todo[inline,color=red]{TODO}
+\smallskip
+
+\end{proof}
+
+\begin{definition}
+An \tit{additive} category $\Cc$ is a preadditive category such that for all objects $X$ the morphism $\nabla\perp p_1:X\prod X\to X\prod X$ is an isomorphism (in particular, it is $\Ab$-enriched by proposition \ref{proposition:semiadditive-categories}).
+\end{definition}
+
+\begin{theorem}
+Let $R$ be a ring spectrum.
+\begin{rmnumerate}
+    \item The\rightnote{\upshape Actually, arbitrary products are also preserved, but we don't show that.} localization functor $\gamma:\RMod\to D(R)$ preserves arbitrary coproducts and finite products. In particular, $D(R)$ has arbitrary coproducts and finite products.
+    \item The derived category $D(R)$ is additive.
+\end{rmnumerate}
+\end{theorem}
+
+\begin{proof}
+Eh$\times2$.
+
+\medskip
+\todo[inline,color=red]{TODO}
+\smallskip
+
+\end{proof}

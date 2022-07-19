@@ -1,0 +1,159 @@
+% Lecture 11
+
+\lecture[]{2022-05-23}
+
+(ii) Let $H:I\to Z$ be a homotopy based on $(I,i_0,i_1,p)$ from $f$ to $g$. Then $\psi\circ H:I\to Z'$ is a homotopy based on the same cylinder from $\psi f$ to $\psi g$.
+
+(iii) This one is pretty annoying.
+
+\medskip
+\todo[inline,color=red]{finish typing up!}
+\medskip
+
+\comment{
+We let $(I,i_0,i_1,p)$ and $(J,j_0,j_1,q)$ be cylinder objects for $A$ and $\bar A$. The left vertical morphism in
+\[
+\begin{tikzcd}
+\bar A\amalg\bar A \ar[d,tail,"j_0+j_1"'] \ar[r,"i_0\phi+i_1\phi"] & I \ar[d,"p"]\\
+J \ar[r,"\phi q"] & A
+\end{tikzcd}
+\]
+is a cofibration. So there is a pushout of the initial part (?)
+\[(\phi q)\cup p:J\cup_{\bar A\amalg\bar A}I\to A.\]
+We factor this as a cofibration
+\[\bar\phi\cup t:J\cup_{\bar A\amalg\bar A}I\tailto I'\]
+and a weak equivalence
+\[p':I'\to A.\]
+We set
+\[i_0'=ti_0,\ i_1'=ti_1:A\to I'.\]
+Consider the diagram
+\[
+\begin{tikzcd}
+\bar A\amalg\bar A \ar[d,tail,"j_0+j_1"'] \ar[rr,"\phi\amalg\phi"] & & A\amalg A \ar[dl,tail,"i_0'+i_1'"'] \ar[d,tail,"i_0+i_1"]\\
+J \ar[d,"q"',"\sim"] \ar[r,"\bar\phi"] & I' \ar[d,"p'"',"\sim"] & I \ar[l,tail,"t"',"\sim"] \ar[dl,"p","\sim"']\\
+\bar A \ar[r,"\phi"] & A &
+\end{tikzcd}
+\]
+
+Claim. $(I',i_0',i_1',p)$ is another cylinder object for $A$.
+
+\begin{claimproof}
+Since $p$ and $p'$ are weak equivalences, so is $t$. Since $j_0+j_1$ is a cofibration, so is the canonical morphism $I\to J\cup_{\bar A\amalg\bar A}$ is a cofibration. Since $\bar\phi\cup t$ is a cofibration, so is the composite
+\[*****\]
+\[*****\]
+So $t$ is a cofibration.
+\end{claimproof}
+
+\[Seephotos\]
+}
+
+(iv) This one is a bit less annoying than the previous, but still annoying.
+
+\medskip
+\todo[inline,color=red]{finish typing up!}
+
+\subsection{Localization of a Cofibration Category}
+
+\begin{construction}
+Let $\Cc$ be a cofibration category. Fix $A,B\in\Ob(\Cc)$. We consider a relation on the \enquote{set}\rightnote{Quote-unquote because we most likely have to pass to a bigger Grothendieck universe.} of pairs $(f,\tau)$ with
+\begin{itemize}
+    \item $f:A\to Z$ any morphism of $\Cc$,
+    \item $\tau:B\acco Z$ an acyclic cofibration,
+\end{itemize}
+namely $(f,\tau)\approx (f',\tau')$ when there are acyclic cofibrations
+\[a:Z\acco\bar Z,\ b:Z'\acco\bar Z\]
+such that $af\sim bf'$ and $a\tau\sim b\tau$.
+\[
+\begin{tikzcd}[column sep=large]
+& Z \arrow[d, tail, "a", "\sim"']\\
+A \arrow[dr, "f'", swap] \arrow[ur, "f"] & \bar{Z}  & B \arrow[ul, tail, "\tau"', "\sim" pos=0.45] \arrow[dl, tail, "\tau'" , "\sim"' pos=0.45]\\
+ & Z' \arrow[u, "b"', "\sim", tail]
+ \end{tikzcd}
+\]
+\end{construction}
+
+\begin{proposition}
+The relation $\approx$ is an equivalence relation.
+\end{proposition}
+
+\begin{proof}
+Reflexivity and symmetry are ok. For transitivity...
+
+\medskip
+\todo[inline,color=red]{finish typing up!}
+\smallskip
+
+\end{proof}
+
+\begin{construction}
+Let $\Cc$ be a cofibration category. We define a category $\Ho(\Cc)$ with the same objects as $\Cc$. Morphisms $\Ho\Cc(A,B)$ are $\approx$ classes of pairs $(f:A\to B,\tau:B\acco Z)$. We write 
+\[\tau\bs f:=\gamma(\tau)^\inv\circ\gamma(f):A\to B\]
+for the equivalence class of $(f\tau)$.
+
+We define composition as follows. Let $(f,\tau)$ and $(g,\sigma)$ represent morphisms $\tau\bs f:A\to B$ and $\sigma\bs g:B\to C$. We choose a pushout
+\[
+\begin{tikzcd}
+ & & C \arrow[d, tail, "\sigma", "\sim"']\\
+ & B \arrow[d, "\tau", "\sim"', tail] \arrow[r, "g"] & Y \arrow[d, tail, "\psi", "\sim"']\\
+A \arrow[r, "f"'] & Z \arrow[r, "\phi"'] & W
+\end{tikzcd}
+\]
+where $\psi$ is an acyclic cofibration by C3, and we define
+\[(\sigma\bs g)\circ(\tau\bs f)=(\psi\sigma)\bs(\phi f).\]
+\end{construction}
+
+One of the main motivations for having a theory of model or cofibration categories is that the localization at the class $W$ of the weak equivalences is well-behaved, i.e. it is a category of fractions, meaning that we can express morphisms in the localized category in the simplest possible way (we don't have to deal with zigzags of weak equivalences). The next theorem shows exactly this: the category $\Ho(\Cc)$ we defined is the localization of $\Cc$ at the weak equivalences, hence the latter is a category of fractions.
+
+\begin{theorem}\label{theorem:homotopy-category-is-localization}
+Let $\Cc$ be a cofibration category.
+\begin{rmnumerate}
+    \item Composition is well-defined and makes $\Ho(\Cc)$ into a category.
+    \item The assignments $\gamma(A)=A$ and $\gamma(f)=\id\bs f$ define a functor
+    \[\gamma:\Cc\to\Ho(\Cc).\]
+    \item For every acyclic cofibration $\tau:B\acco Z$ the morphism $\gamma(\tau)$ is invertible and its inverse is $\tau\bs\id_Z$. Moreover $\tau\bs f=\gamma(\tau)^\inv\circ\gamma(f)$.
+    \item The functor $\gamma:\Cc\to\Ho(\Cc)$ takes weak equivalences in $\Cc$ to isomorphisms in $\Ho(\Cc)$.
+    \item The functor $\gamma:\Cc\to\Ho(\Cc)$ is a localization at the weak equivalences.
+\end{rmnumerate}
+\end{theorem}
+
+\begin{proof}\renewcommand{\qed}{\hfill\tit{To be continued...}}
+Take a deep breath. Let's go.
+
+(i) We start by noticing that if in the definition of composition we choose another pushout, it will be isomorphic to the first one, so
+\[(\phi f,\psi\sigma)\approx(\phi' f,\psi'\sigma)\]
+via an isomorphism and the identity.
+
+The equivalence relation $\approx$ is generated by three elementary relations:
+\begin{itemize}
+    \item[(1)] For all acyclic cofibrations $a:Z\acco\bar Z$, $(f,\tau)\approx(af,a\tau)$,
+    \item[(2)] For all pairs of homotopic morphisms $f,f':A\to Z$, $(f,\tau)\approx(f',\tau)$,
+    \item[(3)] For all pairs of homotopic acyclic cofibrations $\tau,\tau':B\to Z$, $(f,\tau)\approx(f,\tau')$.
+\end{itemize}
+\[
+\begin{tikzcd}
+& Z \arrow[d, tail, "a", "\sim"'] & & & Z \arrow[d, eq] & & & Z \arrow[d, eq]\\
+A \arrow[ur, "f"] \arrow[dr, "af", swap] & \bar{Z} & B \arrow[ul, "\tau", swap] \arrow[dl, "a \tau"] & A \arrow[ur, "f"] \arrow[dr, "f'", swap] & Z & B \arrow[ul, "\tau", swap] \arrow[dl, "\tau"] & A \arrow[ur, "f"] \arrow[dr, "f", swap] & Z & B \arrow[ul, "\tau", swap] \arrow[dl, "\tau'"]\\
+ & \bar{Z} \arrow[u, eq] & & & Z \arrow[u, eq] & & & Z \arrow[u, eq]
+ \end{tikzcd}
+\]
+We will show that postcomposition with a pair $(g:B\to Y,\sigma:C\tailto Y)$ is compatible with these three elementary relations.
+
+(1)
+
+\medskip
+\todo[inline,color=red]{TODO}
+\medskip
+
+(2)
+
+\medskip
+\todo[inline,color=red]{TODO}
+\medskip
+
+(3)
+
+\medskip
+\todo[inline,color=red]{TODO}
+\smallskip
+
+\end{proof}

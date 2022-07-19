@@ -1,0 +1,134 @@
+% Lecture 1
+
+\renewcommand{\thechapter}{\Roman{chapter}}
+
+\chapter{Orthogonal Spectra}
+
+\section*{Some Motivation}
+
+\lecture[We start with some motivation for spectra and a first (easier and provisional) definition, just to open the dances.]{2022-04-11}
+
+The main object we want to study in this course are spectra. Spectra are \enquote{representing objects for (co)homology theories}, a fact known as Brown's representability theorem. Another motivation for the introduction of spectra is given by the following well-known theorem.
+
+\begin{theorem**}[Freudenthal's suspension theorem]
+Let $X$ be an $n$-connected CW-complex. Then the suspension morphism
+\[\Sigma:\pi_k(X,*)\to\pi_{k+1}(\Sigma X,*),\ [S^k\xto{f}X]_*\mapsto[S^{k+1}\cong\Sigma S^k\xto{\Sigma f}\Sigma X]\]
+is an isomorphism for $1\leq k\leq2n$ and an epimorphism for $k=2n+1$.
+\end{theorem**}
+
+We are not going to prove the theorem. It follows easily from the Blackers-Massey excision theorem (which we also will not see but which is a fairly elementary, if hard to prove, result), see \cite[\nopp theorem 4.23, corollary 4.24]{hatcher}\rightnote{A different proof is given in \cite{tomdieck} and in \href{http://www.math.uni-bonn.de/~schwede/Blakers-Massey.pdf}{this document by Schwede}.}; moreover, it can be generalized to any $n$-connected space. A remarkable consequence of the Freudenthal suspension theorem is the following: the homotopy groups of the iterated suspension $\Sigma^m X$ of a CW-complex (or space) $X$ stabilize for large enough $m$ (as the bound given in the theorem for the suspension morphism to be an isomorphism grows faster than the number of applications of the suspension functor).
+
+\begin{example}
+In the case of spheres, we have
+\[\underbrace{\pi_1(S^1,*)}_{\cong\Z}\xto{\Sigma}\underbrace{\pi_2(S^2,*)}_{\cong\Z}\xto{\cong}\pi_3(S^3,*)\xto{\cong}\cdots\]
+and also
+\[\underbrace{\pi_2(S^1,*)}_{\cong0}\xto{\Sigma}\underbrace{\pi_3(S^2,*)}_{\cong\Z\cb{\eta}}\xto{\Sigma}\underbrace{\pi_4(S^3,*)}_{\cong\Z/2\cb{\Sigma\eta}}\xto{\cong}\pi_5(S^4,*)\xto{\cong}\cdots\]
+at least if one is able to compute $\pi_4(S^3)$... we do this in AT2Sheet1.2.
+\end{example}
+
+Spectra are somehow the \enquote{universal home for stable phenomena}. This can be restated in fancy terms: the $\infty$-category\rightnote{Sadly, all we will be getting on the $\infty$-category side of this story will be cryptic remarks...} of spectra is the free presentable stable $\infty$-category on one object (the sphere spectrum).
+
+\section{Sequential Spectra}
+
+We now give a first (rather quick and dirty) definition of spectra as sequential spectra (this will be later superseded by orthogonal spectra).
+
+\begin{definition!}\label{definition:sequential-spectra}
+A \tit{(sequential) spectrum} $X$ consists of:
+\begin{itemize}
+    \item based spaces $(X_n,*)$ for $n\geq0$,\rightnote{Given that the basepoint is part\\ of the structure, we will usually omit it in $\pi_k(X_n,*)$.}
+    \item continuous based maps $\sigma_n:\Sigma X_n\to X_{n+1}$.
+\end{itemize}
+A \tit{morphism of spectra} $f:X\to Y$ consists of a sequence $f_n:X_n\to Y_n$ of based continuous maps such that the following square commutes:
+\[
+\begin{tikzcd}
+\Sigma X_n \ar[r,"\sigma^X_n"] \ar[d,"\Sigma f_n"'] & X_{n+1} \ar[d,"f_{n+1}"]\\
+\Sigma Y_n \ar[r,"\sigma^Y_n"] & Y_{n+1}
+\end{tikzcd}
+\]
+\end{definition!}
+
+\begin{remark!}
+This class will take place in the category of compactly generated spaces.
+
+Let $X$ be a topological space. A subset $A$ of $X$ is compactly closed if for any continuous map $f:K\to X$ from a compact space $K$, $f^\inv(A)$ is closed. The space $X$ is called a \tit{k-space} (Kelley space) if every compactly closed subset is closed, it is called \tit{weak Hausdorff} if for every compact space $K$ and any continuous map $f:K\to X$, the image of $f$ is closed in $X$. A \tit{compactly generated}\footnote{In the literature our compactly generated spaces are sometimes called \enquote{compactly generated weak Hausdorff} (or CGWH) spaces. It is more convenient to include \enquote{weak Hausdorff} in \enquote{compactly generated} as compactly generated but not weak Hausdorff spaces are not as common or as useful (and in fact, the first definition of compactly generated spaces followed our convention).} space is a weak Hausdorff k-space.
+
+Let $\T$ denote the full subcategory of $\Top$ consisting of compactly generated spaces. We collect some of the properties of $\T$.
+\begin{itemize}
+    \item $\T$ is cartesian closed, complete and cocomplete.
+    \item The inclusion of the subcategory of k-spaces in $\Top$ has a right adjoint, usually called \enquote{Kelleyfication}. The inclusion of $\T$ in the subcategory of k-spaces has a left adjoint, called (sic) \enquote{weak Hausdorffification}.
+    \[\begin{tikzcd}
+    \T \ar[r,hook] & \operatorname{k-spaces} \ar[r,hook] \ar[l,bend right,shift right,"\text{weak Hausdorffification}"'] & \Top \ar[l,bend left,"\text{Kelleyfication}",near start]
+    \end{tikzcd}\]
+    Given the situation, there is no hope for limits and colimits in $\T$ to be just limits and colimits taken in $\Top$: one has to take the limit or colimit in $\Top$ and then apply one of the two functors going towards $\T$ (just one, as the other one will be the \enquote{good} adjoint). Even worse: in general the forgetful functor $\T\to\Set$ \emph{does not} preserve colimits.\rightnote{Implying that it does preserve limits, at least...}
+    \item Every closed subset of a compactly generated space is compactly generated.
+    \item Every locally compact Hausdorff space, CW-complex, metric space, manifold is compactly generated.
+    \item Any disjoint union of compactly generated spaces is compactly generated.
+    \item The ordinary product of a compactly generated space and a locally compact Hausdorff space is compactly generated.
+\end{itemize}
+\vspace{5em}
+\end{remark!}
+
+The \tit{$k$-th homotopy group}, for $k\in\Z$, of a spectrum $X$ is
+\[\pi_k(X)=\colimit_{n,n+k>0} \pi_{n+k}(X_n),\]
+with colimit taken over the diagram
+\[\pi_{n+k}(X_n)\xto{\Sigma}\pi_{1+n+k}(\Sigma X_n)\xto{(\sigma_n)_*}\pi_{1+n+k}(X_{1+n}).\rightnote{It will become apparent in the future that here is a good reason for writing $1+n$ instead of $n+1$,\\ i.e. keeping track\\ of coordinates (or in other terms if we smash on the left or the right).}\]
+Eventually, all maps in the diagram are morphisms of abelian groups, so $\pi_k(X)$ inherits an abelian group structure. The construction of $\pi_k(X)$ is clearly functorial for morphisms of spectra, so we have defined functors $\pi_k:\Sp^\N\to\Ab$ for $k\in\Z$.
+
+A morphism $f:X\to Y$ of spectra is a \tit{stable equivalence} if
+\[\pi_k(f):\pi_k(X)\to\pi_k(Y)\]
+is an isomorphism for all $k\in\Z$. The \tit{stable homotopy category} is the $1$-categorical localization
+\[\SH:=\Sp^\N[\steq^\inv],\]
+the \tit{$\infty$-category of spectra} is the $\infty$-categorical localization
+\[\Sp_\infty:=\Sp^\N[\steq^\inv]_\infty.\]
+
+The rest of this lecture and most of the following will be occupied with remarkable examples of spectra, often citing results without proof, mainly for motivation.
+
+\section{Remarkable Classes of Spectra}
+
+\subsection*{Suspension Spectra}
+
+Let $K$ be a based space. The \tit{suspension spectra} $\Sigma^\infty K$ is the spectrum with $(\Sigma^\infty K)_n=S^n\smsh K$, where the \tit{smash product} $X\smsh Y$ is defined as
+\[X\smsh Y:=\frac{X\times Y}{X\vee Y}=\frac{X\times Y}{X\times\cb{y_0}\cup\cb{x_0}\times Y}.\]
+To define the structure maps it is convenient to consider $S^n=\R^n\cup\cb{\infty}$ with the one-point compactification topology, and we will do so throughout the course. In particular we have
+\[S^m\smsh S^n\cong S^{m+n}\]
+with homeomorphism given by the obvious map
+\[\R^m\times\R^n\cong\R^{m+n},\ ((\xs),(y_1,\dots,y_n))\mapsto(\xs,y_1,\dots,y_n).\]
+Note that we also have
+\[\Sigma X=\frac{X\times[0,1]}{X\times\cb{0,1}\cup\cb{x_0}\times[0,1]}\cong\frac{X\times S^1}{X\times\cb{z_0}\cup\cb{x_0}\times S^1}=X\smsh S^1.\rightnote{The smash product is associative since we are working with compactly generated spaces (in general, i.e.\\ in $\Top$, it is not). This is because in cartesian closed categories finite products commute with (finite) colimits.}\]
+Then the structure maps of $\Sigma^\infty K$ are
+\[\sigma_n:\Sigma(\Sigma^\infty K)_n=S^1\smsh(S^n\smsh K)\cong(S^1\smsh S^n)\smsh K\cong S^{1+n}\smsh K.\]
+
+We call the $k$-th homotopy group of $\Sigma^\infty K$, \[\pi_k(\Sigma^\infty K)=\colimit_n \pi_{n+k}(S^n\smsh K),\] the \tit{$k$-th stable homotopy group} of $K$. If the base point is non-degenerate, then $S^n\smsh K$ is $(n-1)$-connected, hence for $k<0$ we have
+\[\pi_k(\Sigma^\infty K)=0,\]
+which we express by saying that the $\Sigma^\infty K$ is \tit{connective}, and
+\[\pi_0(\Sigma^\infty K)\cong\til H_0(K;\Z)=\Z[\pi_0(K)].\]
+
+As a special (very important) case, we have the \tit{sphere spectrum}\rightnote{This is the \enquote{real} initial ring, the brave new integers.}
+\[\SS:=\Sigma^\infty S^0=\cb{S^n,\sigma_n:S^1\smsh S^n\xto{\cong}S^{1+n}}.\]
+The group $\pi_k(\SS)=\colimit_n\pi_{n+k}(S^n)$ is called the \tit{$k$-th stable homotopy group of spheres} or the \tit{$k$-th stable stem}. We have that $\pi_k(\SS)=0$ for $k<0$ and $\pi_0(\SS)\cong\Z$. Moreover we have the following results (which we will not prove).
+
+\begin{theorem**}[Serre]
+For $k,n\geq1$, the group $\pi_k(S^n,*)$ is finite, unless $k=n$ or $n$ is even and $k=2n-1$.
+\end{theorem**}
+
+\begin{corollary**}
+$\pi_k(\SS)$ is finite for $k>0$.
+\end{corollary**}
+ 
+We list here the first stable stems (up until the first non-cyclic one), in terms of the first, second and third Hopf maps (whose definition is recalled below).
+
+{\setlength{\tabcolsep}{8pt}
+\begin{center}
+\begin{tabular}{l*{12}{c}r}
+$\ \ \ \ \ \ \,k$ & $0$ & $1$ & $2$ & $3$ & $4$  & $5$ & $6$ & $7$ & $8$\\
+\hline
+$\ \ \ \ \,\pi_k(\SS)$ & $\Z$ & $\Z/2$ & $\Z/2$ & $\Z/24$ &  $\ \ 0\ \ $ & $\ \ 0\ \ $  & $\Z/2$ & $\Z/240$ & $\,(\Z/2)^2$ \\
+Generators & $\ \,\id_{S^1}$ & $\eta$ & $\eta^2$ & $\nu$ &  &  & $\nu^2$ & $\sigma$ & $\eta \sigma, \epsilon$  \\
+\end{tabular}
+\end{center}}
+
+\begin{itemize}
+\item $\eta:S(\CC^2) \cong S^3 \to \CC P^1 \cong S^2,\ (x,y)\mapsto[(x,y)]$,
+\item $\nu:S(\HH^2) \cong S^7 \to \HH P^1 \cong S^4,\ (x,y)\mapsto[(x,y)]$,\rightnote{One has to be a\\ bit careful when dealing with the octonions, as they are not associative.}
+\item $\sigma:S(\mathbb{O}^2) \cong S^{15} \to \mathbb{O} \cup \{\infty \} \cong S^8, \ (x,y) \mapsto xy^\inv$.
+\end{itemize}

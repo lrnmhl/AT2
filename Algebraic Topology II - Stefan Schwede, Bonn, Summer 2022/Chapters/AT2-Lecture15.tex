@@ -1,0 +1,126 @@
+% Lecture 15
+
+\subsection{Triangulated Structure on the Homotopy Category}
+
+\lecture[]{2022-06-13}
+
+\begin{definition}
+Let $\Cc$ be a pointed cofibration category. A \tit{functorial cone} is the data of a functor $C:\Cc\to\Cc$ and a natural transformation $\iota:\id_\Cc\to C$ such that for all $X\in\Cc$, the morphism $\iota_X:X\to CX$ is a cofibration and the unique morphism $CX\to*$ is a weak equivalence.
+\end{definition}
+
+\begin{remark}
+Not all cofibration categories have \tit{functorial} cones (of course you always get cones by factoring $X\to*$) and in fact they are not necessary to have a triangulated structure on the homotopy category, as derived categories turn out to always have functorial cones anyway. The requirement will just save us some time and the cofibration categories we are interested in do have functorial cones anyway. In particular, if $\Cc=\RMod$ for and orthogonal ring spectrum $R$, we can take
+\[CM=M\smsh[0,1],\ \iota:-\smsh1:M\to M\smsh[0,1].\]
+\end{remark}
+
+\begin{construction}
+Let $\Cc$ be a pointed (i.e. with zero object) cofibration category with functorial cones. The \tit{suspension functor} $\Sigma:\Cc\to\Cc$ is defined on object by $\Sigma X=CX/X$, i.e. the pushout
+\[
+\begin{tikzcd}
+X \ar[d,tail,"\iota_X"] \ar[r,"0"] & * \ar[d]\\
+CX \ar[r,"q_X"] & \Sigma X
+\end{tikzcd}
+\]
+and, given that we are considering functorial cones, we extend the assignment to morphism in the natural way. Any morphism $CX\to CY$ is a weak equivalence, because source and target are weakly equivalent to $*$. Given a weak equivalence $f:X\to Y$, by the gluing lemma for
+\medskip
+\todo[inline,color=red]{add diagram!}
+\smallskip\noindent
+the morphism $\Sigma f:\Sigma X\to\Sigma Y$ is also a weak equivalence.
+\end{construction}
+
+Suppose that $C':\Cc\to\Cc$ is another functorial cone. Then by the gluing lemma, the following two morphisms are natural weak equivalences
+\[\Sigma X\xrightarrow{q_X\cup0}CX\cup_X C'X\xto{0\cup q'_X}\Sigma' X.\]
+
+The composite $\gamma\circ\Sigma:\Cc\to\Ho(\Cc)$ takes weak equivalences to isomorphisms, so there is a unique functor $\Sigma:\Ho(\Cc)\to\Ho(\Cc)$ such that the following commutes\rightnote{This is a fairly convoluted way to explain a harmless abuse of notation.}
+\[
+\begin{tikzcd}
+\Cc \ar[d,"\gamma"] \ar[r,"\Sigma"] & \Cc \ar[d,"\gamma"]\\
+\Ho(\Cc) \ar[r,dashed,"\Sigma"] & \Ho(\Cc)
+\end{tikzcd}
+\]
+In particular, $\Sigma X=\Sigma X$ on objects and
+\[\Sigma(\gamma(s)^\inv\circ\gamma(f))=(\Sigma\gamma(s))^\inv\circ(\Sigma\gamma(f))=\gamma(\Sigma s)^\inv\circ\gamma(\Sigma f).\]
+
+\begin{construction}
+Let $\Cc$ be a pointed cofibration category with functorial cones. The \tit{elementary distinguished triangle} of a $\Cc$-morphism $\psi:X\to Y$
+\[X\xto{\gamma(\psi)}Y\xto{\gamma(i)}C\psi\xto{\gamma(p)}\Sigma X\]
+where $C\psi=CX\cup_\psi Y$ is the \tit{mapping cone} of $\psi$, i.e. a pushout
+\[
+\begin{tikzcd}
+X \ar[d,"\iota_X"] \ar[r,"\psi"] & Y \ar[d,"i"]\\
+CX \ar[r] & C\psi
+\end{tikzcd}
+\]
+and $p$ is the map induced by $0:Y\to \Sigma X$ and $q_X:CX\to\Sigma X$.
+\end{construction}
+
+A triangle $(f,g,h)$ in $\Ho(\Cc)$ is \tit{distinguished} if it is isomorphic to some elementary distinguished triangle, i.e. there is a $\Cc$-morphism $\psi:X\to Y$ and isomorphisms
+\begin{align*}
+    a:A\xto{\cong}X\\
+    b:B\xto{\cong}Y\\
+    c:C\xto{\cong}C\psi
+\end{align*}
+in $\Ho(\Cc)$ such that the following commutes
+\[
+\begin{tikzcd}
+A \ar[d,"a"',"\cong"] \ar[r,"f"] & B \ar[d,"b"',"\cong"] \ar[r,"g"] & C \ar[d,"c"',"\cong"] \ar[r,"h"] & \Sigma A \ar[d,"\Sigma a"',"\cong"]\\
+X \ar[r,"\gamma(f)"] & Y \ar[r,"\gamma(i)"] & Cf \ar[r,"\gamma(p)"] & \Sigma X
+\end{tikzcd}
+\]
+
+\begin{construction}[Distinguished triangles from cofibrations]
+Let $j:A\tto B$ be a cofibration in $\Cc$, write $B/A$ for a cokernel of $j$ and $q:B\to B/A$ the \enquote{quotient} morphism. By the gluing lemma for...
+\medskip
+\todo[inline,color=red]{TODO}
+\smallskip
+\end{construction}
+
+\begin{proposition}
+Let $\Cc$ be a pointed cofibration category with functorial cones. Then a triangle in $\Ho(\Cc)$ is distinguished if and only if it is isomorphic to $(\gamma(j),\gamma(q),\delta(j))$ for some cofibration $j\in\Cc$.
+\end{proposition}
+
+\begin{proof}
+Eh.
+
+\medskip
+\todo[inline,color=red]{TODO}
+\smallskip
+\end{proof}
+
+\begin{theorem}
+Let $\Cc$ be a pointed cofibration category with functorial cone. Suppose that $\Ho(\Cc)$ is additive and $\Sigma:\Ho(\Cc)\to\Ho(\Cc)$ is an equivalence. Then $(\Cc,\Sigma,\text{dist. triangles})$ forms a triangulated category.
+\end{theorem}
+
+\begin{remark}
+The hypothesis are slightly redundant: we don't really need functorial cones and more surprisingly $\Ho(\Cc)$ is already forced to be additive by the suspension functor being an equivalence (although proving this carefully requires some time and doesn't add much to our understanding, also considered that most of the cofibration categories we work with have functorial cones and their homotopy categories are clearly additive anyway).
+\end{remark}
+
+\begin{proof}
+(T0) The class of distinguished triangles is closed under isomorphism. This is fine.
+
+(T1) Every morphism $f$ in $\Ho(\Cc)$ is part of a distinguished triangle $(f,g,h)$. We write $f:A\to B$ in $\Ho(\Cc)$ as $f=\gamma(s)^\inv\circ\gamma(\psi)$ for two $\Cc$-morphisms $\psi:A\to D$ and $s:B\to D$ and such that $s$ is a weak equivalence. Then...
+
+\medskip
+\todo[inline,color=red]{TODO}
+\smallskip
+
+(T2)
+
+\medskip
+\todo[inline,color=red]{TODO}
+\smallskip
+
+(T3)
+
+\medskip
+\todo[inline,color=red]{TODO}
+\medskip
+
+(T4)
+
+\medskip
+\todo[inline,color=red]{TODO}
+\medskip
+
+\renewcommand{\qed}{\hfill\tit{To be continued...}}
+\end{proof}

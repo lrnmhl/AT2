@@ -1,0 +1,256 @@
+% Lecture 7
+
+\lecture[More useful spectra facts, then we introduce ring and module spectra.]{2022-05-04}
+
+\noindent
+The next result is similar to the one that holds for the mapping telescope (AT1Sheet2.3 or Proposition \ref{proposition:mapping-telescope-is-homotopy-colimit-generalized} for generalized homology theories).
+
+\begin{proposition}
+The following holds.
+\begin{itemize}
+    \item[i)] Let
+    \[X^0\xto{\,e^0\ }X^1\xto{\,e^1\ }\cdots\xto{e^{n-1}}X^n\xto{e^{n+1}}\cdots\]
+    be a sequence of morphisms of sequential spectra that are levelwise closed embeddings.\rightnote{\upshape Colimits in $\T$ of sequences of closed embeddings coincide with the colimit in $\Top$.} Then the canonical map
+    \[\colim_{m\geq0}\pi_k(X^m)\to\pi_k(\colim_{m\geq0}X^m)\]
+    is an isomorphism.
+    \item[ii)] Let $e^m:X^m\to X^{m+1}$ and $f^m:Y^m\to Y^{m+1}$ be morphisms of sequential spectra that are levelwise closed embeddings and $\psi^m: X^m\to Y^m$ stable equivalences which fit in commutative diagrams
+    \[
+    \begin{tikzcd}
+    X^m \ar[d,"\psi^m"'] \ar[r,"e^m"] & X^{m+1} \ar[d,"\psi^{m+1}"]\\
+    Y^m \ar[r,"f^m"] & Y^{m+1}
+    \end{tikzcd}
+    \]
+    then the induced morphism
+    \[\psi^\infty:=\colim_m\psi^m:\colim_m X^m\to\colim_m Y^m\]
+    is a stable equivalence.
+    \item[iii)] Let $e^m:X^m\to X^{m+1}$ be stable equivalences that are levelwise closed embeddings. Then the canonical map \[X^0\to\colim_{m\geq0}X^m\]
+    is a stable equivalence. 
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+We just need to prove the first point, as the other two are immediate consequences. Let $f:S^{n+k}\to X^\infty_n=\colimit_m X^m_n$ be a continuous based map representing a class in $\pi_k(X^\infty)$. Since the maps $e^m_n:X^m_n\to X_n^{m+1}$ are closed embeddings, by \cite[Proposition A.15]{schwede}\rightnote{This standard fact has to be checked anew as we are working with weak Hausdorff spaces.} the map $f$ factors through $X^m_n$ for some $m$. So $f$ is in the image $\pi_k(X^m)\to\pi_k(X^\infty)$. Injectivity follows from the same argument with homotopies.
+\end{proof}
+
+The next long proposition is a collection of reasonable results. However useful this might be, it is undeniably a bit dull, but some of these fact will play an important role later on: they hint towards a model structure on the category of spectra.
+
+\begin{proposition}\label{proposition:preservation-of-stable-equivalences}
+The following holds.
+\begin{itemize}
+    \item[i)] A coproduct (wedge) of stable equivalences is a stable equivalence.
+    \item[ii)] A finite product of stable equivalences is a stable equivalence.
+    \item[iii)] Consider a commutative square of sequential spectra
+    \[
+    \begin{tikzcd}
+    A \ar[d,"f"] \ar[r,"i"] & B \ar[d,"g"]\\
+    C \ar[r,"j"] & D
+    \end{tikzcd}\tag{$*$}
+    \]
+    and let $h=Cf\cup g:Ci\to Cj$ be the induced morphism of mapping cones. If two out of $f$, $g$ and $h$ are stable equivalences, then so is the third.
+    \item[iv)] In $(*)$, let $e_i:Fi\to Fj$ be the induced morphism of homotopy fibres. If two out of $e$, $f$ and $g$ are stable equivalences, then so is the third.
+    \item[v)] In $(*)$, suppose that one of the following conditions hold:
+    \begin{alphanumerate}
+    \item the square is a pushout and $i$ or $f$ is levelwise an h-cofibration,
+    \item the square is a pullback and $j$ or $g$ is levelwise a Serre fibration.
+    \end{alphanumerate}
+    Then $f$ is a stable equivalence if and only if $g$ is.
+    \item[vi)] Let $K$ be a based space that admits a CW-structure. Then $-\smsh K$ preserves stable equivalences.
+    \item[vii)] Let $K$ be a based space that admits a \tit{finite} CW-structure. Then $\map_*(K,-)$ preserves stable equivalences.
+\end{itemize}
+\end{proposition}
+
+\begin{proof}
+The first two points are immediate consequences of Proposition \ref{proposition:homotopy-of-wedges-and-products-of-spectra}. The third point follows by applying the 5-lemma to the long exact sequences of the mapping cones of $i$ and $j$. The fourth point is dual to the third, it suffices to use the homotopy fiber in place of the mapping cone.
+
+(v) It suffices to prove (a), as (b) follows from the dual argument. The square $(*)$ is a pushout. So the morphisms
+\[j/i:C/A\to D/B\]
+\[g/f:B/A\to D/C\]
+are isomorphisms.\leftnote{This is easy to prove for spaces but is a general nonsense fact.} We split the proof in two cases
+
+Case 1. Suppose $f$ is levelwise an h-cofibration (hence so is $g$).\rightnote{Cofibrations are closed under pushouts.} The long exact sequence for the homotopy groups of $f$ (the one in Corollary \ref{corollary:les-quotient}) shows that
+\[\pi_*(f):\pi_*(A)\to\pi_*(C)\]
+is an isomorphism if and only if
+\[\pi_*(C/A)=0\iff\pi_*(D/B)=0\iff\pi_*(g):\pi_*(B)\to\pi_*(D)\text{\upshape\ is an isomorphism.}\]
+
+Case 2. If $i$ is an h-cofibration (and hence also $j$), we compare the long exact sequence of homotopy groups of the quotient in the horizontal direction
+\[
+\begin{tikzcd}
+\cdots \arrow[r] & \pi_k(A) \arrow[d, "f_*"] \arrow[r, "i_*"] & \pi_k(B) \arrow[r, "\operatorname{proj}_*"] \arrow[d, "g_*"] & \pi_k(B/A) \arrow[r, "\delta"] \arrow[d, "(g/f)_*"] & \cdots\\
+\cdots \arrow[r] & \pi_k(C) \arrow[r, "j_*", swap] & \pi_k(D) \arrow[r, "\operatorname{proj}_*", swap] & \pi_k(D/C) \arrow[r, "\delta"] & \cdots
+\end{tikzcd}
+\]
+we have that $(g/f)_*$ is an isomorphism, so we can conclude via five Lemma.
+
+(vi) The functor $-\smsh K$ commutes with mapping cones
+\[(Cf)\smsh K\cong C(f\smsh K)\]
+so the long exact sequence for the mapping cone reduces the claim to the following special case: if $X$ has trivial homotopy groups, so does $X\smsh K$.
+
+We choose a CW-structure in which the base point is a $0$-cell with skeleta $K_n$. We show by induction that $X\smsh K_n$ has trivial homotopy groups. The case $n=-1$ is clear because $X\smsh*=*$. Now let $n\geq0$. Then $K_n/K_{n-1}\cong\bigvee_I S^n$, so
+\begin{align*}
+    \pi_k(X\smsh K_n/X\smsh K_{n-1})&\cong\pi_k(X\smsh(K_n/K_{n-1}))\\
+    &\textstyle\cong\pi_k(X\smsh\bigvee_I S^n)\\
+    &\textstyle\cong\pi_k(\bigvee_I(X\smsh S^n))\\
+    &\textstyle\cong\bigoplus_I\pi_k(X\smsh S^n)\\
+    &\textstyle\cong\bigoplus_I\pi_{k-n}(X)=0.
+\end{align*}
+The inclusion $K_{n-1}\to K_n$ is an h-cofibration. So $X\smsh K_{n-1}\to X\smsh K_n$ is levelwise an h-cofibration. Hence the long exact sequence for the homotopy groups of the strict cofiber and the inductive hypothesis show that $X\smsh K_n$ has trivial homotopy groups.
+
+In the general case the morphism
+\[X\smsh K_0\to X\smsh K_1\to\cdots\]
+are levelwise h-cofibration, hence levelwise closed embeddings. Thus
+\[\pi_k(X\smsh K)\cong\colimit_m\pi_k(X\smsh K_m)=0.\]
+
+(vii) Let $K$ be a finite based CW-complex. Then $\map_*(K,-)$ commutes with homotopy fibers
+\[\map_*(K,Ff)\cong F(\map_*(K,f))\]
+so once again the long exact sequence for the homotopy fiber reduces the\vspace{-0.2ex} statement to the special case: if $X$ has trivial homotopy groups, so does $\map_*(K,X)$.
+
+We argue by induction over the number of cells in $K$. If $K=\cb{k_0}$ consists only of the basepoint, then $\map_*(*,X)=*$ has trivial homotopy groups.
+Otherwise suppose\rightnote{Here is where we use the finiteness assumption and we need it because\\ the pies do not preserve limits (such as the fiber)!} that $L$ is obtained from $K$ by attaching an $n$-cell and assume the claim for $K$. Then the restriction $\map_*(L,X)\to\map_*(K,X)$ is levelwise a Serre fibration (see \cite[theorem III.7]{AT1Notes}), so we get a long exact sequence\leftnote{Secretly we are using that a self adjoint on the right functor sends colimits (the quotient) to limits (the fiber).}
+{\small\[
+\begin{tikzcd}[column sep=small]
+\cdots \arrow[r] & {\pi_k(\text{fiber of } \map_*(L,X) \to \map_*(K,X))} \arrow[r] & {\pi_k(\map_*(L,X))} \arrow[r] & {\pi_k(\map_*(K,X))=0} 
+\\ & {\pi_k(\map_*(L/K, X))} \arrow[u, "\cong"] & &
+\\ & {\pi_k(\map_*(S^n, X))}=\pi_k(\Omega^n X) \arrow[u, "\cong"]
+\\ & \quad\pi_k(\map_{k+n}(X)) = 0 \arrow[u, "\cong"]
+\end{tikzcd}
+\]}
+and thus $\pi_k(\map_*(L,X))=0$.
+\end{proof}
+
+\section{Ring and Module Spectra}
+
+As we already mentioned, sequential spectra are fine and dandy for many purposes and orthogonal spectra really become fundamental only in some situations, most notably equivariant stable homotopy theory. Another theory where orthogonal spectra become crucial is the theory of ring and module spectra. The issue with sequential spectra is that $\Sp^\N$ does not admit a smash product that yields a symmetric monoidal category (\href{https://ncatlab.org/nlab/show/smash+product+of+spectra}{according to the nLab}, there are smash products that yield such a structure \tit{only} after passage to the stable homotopy category). Orthogonal spectra solve this problem (as do symmetric spectra, which are instead problematic because their $\pi_*$-isomorphisms are not suitable weak equivalences).
+
+\begin{definition}
+An \tit{orthogonal ring spectrum} is an orthogonal spectrum $R$ equipped with $(O(V)\times O(W))$-equivariant multiplication maps
+\[\mu_{V,W}:R(V)\smsh R(W)\to R(V\oplus W)\]
+
+and a unit $\iota\in R(0)$ that satisfy the following.
+\begin{itemize}
+\item Associativity. For all inner product spaces $U,V,W$ the following diagram commutes
+\[
+\begin{tikzcd}
+R(U) \smsh R(V) \smsh R(W) \arrow[rr, "{ R(U) \smsh \mu_{V,W}}"] \arrow[d, swap, "\mu_{U,V} \smsh R(W)"] & & R(U) \smsh R(V \oplus W) \arrow[d, "\mu_{U, V \oplus W}"]\\
+R(U \oplus V) \smsh R(W) \arrow[rr, "\mu_{U \oplus V, W}", swap] & & R(U \oplus V \oplus W)
+\end{tikzcd}
+\]
+\item Unitality. For all inner product spaces $V,W$, the composite
+\[
+\begin{tikzcd}
+S^V \smsh R(W) \arrow[r, "- \smsh \iota \smsh -"] & S^V \smsh R(0) \smsh R(W) \arrow[rr, "{\sigma_{V,0} \smsh R(W)}"] & & R(V) \smsh R(W) \arrow[r, "\mu_{V,W}"] & R(V \oplus W)
+\end{tikzcd}
+\]
+equals $\sigma_{V,W}$. Moreover,
+\[
+\begin{tikzcd}
+R(V) \smsh S^W \arrow[r, "- \smsh \iota \smsh -"] & R(V) \smsh R(0) \smsh S^W \arrow[rr, "{R(V) \smsh \sigma_{0,W}^{\op}}"] & & R(V) \smsh R(W) \arrow[r, "\mu_{V,W}"] & R(V \oplus W)
+\end{tikzcd}
+\]
+equals $\sigma_{V,W}^{\op}$.
+\end{itemize}
+An orthogonal ring spectrum is \tit{commutative} if also the following square commutes
+\[
+\begin{tikzcd}
+R(V) \smsh R(W) \arrow[r, "\text{twist}"] \arrow[d, "\mu_{VW}", swap] & R(W) \smsh R(V) \arrow[d, "\mu_{WV}"]\\
+R(V \oplus W) \arrow[r, "R(\tau_{VW})", swap] & R(V \oplus W)
+\end{tikzcd}
+\]
+\end{definition}
+
+\begin{remark}
+Some first observations about the notion of orthogonal ring spectrum.
+
+\begin{enumerate}
+\item As special cases (for $V=0$ or $W=0$) of the unit condition
+\[R(W)\xto{\iota\smsh-}R(0)\smsh R(W)\xto{\mu_{0,W}}R(0\oplus W)\xto{R(\operatorname{proj}_W)}R(W)\]
+is the identity, and similarly for the other composite.
+
+\item If the multiplication maps are commutative, then the two unit conditions are equivalent.
+
+\item The two maps
+\[S^V\xto{-\smsh\iota}S^V\smsh R(0)\xto{\sigma_{V,0}}R(V\oplus0)\cong R(V),\]
+\[S^V\xto{\iota\smsh-}R(0)\smsh S^V\xto{\sigma^\op_{0,V}}R(0\oplus V)\cong R(V),\]
+are equal. We will denote them by
+\[\iota_V:S^V\to R(V)\]
+and call them the \tit{generalized unit map}.
+
+\item Later we will introduce the smash product of orthogonal spectra $\smsh:\Sp\times\Sp\to\Sp$ which is a symmetric monoidal structure with unit object $\SS$. We will see that the category of orthogonal ring spectra is equivalent to the category of monoids in $(\Sp,\smsh,\SS)$.
+\end{enumerate}
+\end{remark}
+
+\begin{definition}
+A \tit{morphisms of orthogonal ring spectra} is a morphism of orthogonal spectra $f:R\to S$ such that
+\[
+\begin{tikzcd}
+R(V) \smsh R(W) \arrow[r, "\mu_{VW}"] \arrow[d, "f(V) \smsh f(W)", swap] & R(V \oplus W) \arrow[d, "f(V \oplus W)"]\\
+S(V) \smsh S(W) \arrow[r, "\mu_{VW}", swap] & S(V \oplus W)
+\end{tikzcd}
+\]
+and
+\[
+\begin{tikzcd}
+& R(V) \arrow[dd, "f(V)"]\\
+S^V \arrow[ur, "\iota_V"] \arrow[dr, "\iota_V", swap]\\
+& S(V)
+\end{tikzcd}
+\]
+meaning $f(V)(\iota) = \iota$.
+\end{definition}
+
+\begin{definition}
+A \tit{left module} over an orthogonal ring spectra $R$ is an orthogonal spectrum $M$ equipped with $O(V)\times O(W)$-equivariant action map
+\[\alpha_{V,W}:R(V)\smsh M(W)\to M(V\oplus W)\]
+that satisfies the following properties.
+\begin{itemize}
+\item Associativity. The following diagram commutes
+\[
+\begin{tikzcd}
+R(U) \smsh R(V) \smsh M(W) \arrow[d, "\mu_{UV} \smsh M(W)", swap] \arrow[rr, "R(U) \smsh \alpha_{VW}"] & & R(U) \smsh M(V \oplus W) \arrow[d, "{\alpha_{U, V \oplus W}}"]\\
+R(U \oplus V) \smsh M(W) \arrow[rr, "{\alpha_{U \oplus V, W}}", swap] & & M(U \oplus V \oplus W).
+\end{tikzcd}
+\]
+\item Unitality. The composite
+\[
+\begin{tikzcd}
+S^V \smsh M(W) \arrow[rr, "\iota_V \smsh M(W)"] & & R(V) \smsh M(W) \arrow[r, "\alpha_{VW}"] & M(V \oplus W)
+\end{tikzcd}
+\]
+equals $\sigma_{VW}$.
+\end{itemize}
+A \tit{morphism of left $R$-modules} is a morphism of orthogonal spectra $f:M \to N$ such that the following commutes
+\[
+\begin{tikzcd}
+R(V) \smsh M(W) \arrow[d, "R(V) \smsh f(W)", swap] \arrow[r, "\alpha_{VW}"] & M(V \oplus W) \arrow[d, "f(V \oplus W)"]\\
+R(V) \smsh M(W) \arrow[r, "\alpha_{VW}", swap] & N(V \oplus W)
+\end{tikzcd}
+\]
+\end{definition}
+
+\begin{remark}
+The category of $R$-modules has limits and colimits and they are computed in the category of orthogonal spectra. Let $F:I\to{}_{R\!}\Mod(\Sp)$ be any functor, $M\in\Sp$ a colimit of the composite with the forgetful functor $U$,
+\[I\xto{F}{}_{R\!}\Mod(\Sp)\xto{U}\Sp.\]
+This inherits a canonical $R$-module structure with action maps
+\begin{align*}
+\alpha_{VW} : R(V) \smsh M(W) &= R(V) \smsh \colimit_{i \in I} F(i)(W)\\
+&\xleftarrow{\cong} \colimit_{i \in I} (R(V) \smsh F(i)(W))\\
+&\xrightarrow{\colimit_{i \in I} \alpha_{VW}^{F(i)}} \colimit_{i \in I} F(i)(V \oplus W)\\
+&= M(V \oplus W).
+\end{align*} 
+where we use that $\smsh$ and colimits commute.
+\end{remark}
+
+\begin{remark}
+The adjoint functor pair
+\[
+\begin{tikzcd}
+\Sp \arrow[rr, "- \smsh K", shift left] &  &\Sp \arrow[ll, "{\map_*(K,-)}", shift left]
+\end{tikzcd}
+\]
+lifts to $R$-modules 
+\[
+\begin{tikzcd}
+\Sp \arrow[rr, "- \smsh K", shift left] &  &\Sp \arrow[ll, "{\map_*(K,-)}", shift left]\\
+{}_{R\!}\Mod(\Sp) \arrow[rr, "- \smsh K", shift left] \arrow[u, "U"] &  & {}_{R\!}\Mod(\Sp) \arrow[ll, "{\map_*(K,-)}", shift left] \arrow[u, "U", swap]
+\end{tikzcd}
+\]
+\end{remark}

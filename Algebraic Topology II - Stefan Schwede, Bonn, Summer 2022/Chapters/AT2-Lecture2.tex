@@ -1,0 +1,150 @@
+% Lecture 2
+
+\subsection*{Eilenberg-Maclane Spectra}
+
+\lecture[Various classes of spectra. A first definition of orthogonal spectra.]{2022-04-13}
+
+Let $A$ be an abelian group. Choose EM-spaces $(K(A,n),\phi_n)$ of type $(A,n)$ for all $n\geq0$. Then $\Omega K(A,n+1)$\rightnote{$\Omega Y\!=\operatorname{map}_*(S^1,Y)$} is an EM-space of type $(A,n)$, so (by \cite[\nopp theorem IV.10]{AT1Notes}) there is a based continuous map $\til\sigma_n:K(A,n)\to\Omega K(A,n+1)$, unique up to homotopy, such that the following triangle of abelian groups commute:
+\[
+\begin{tikzcd}
+\pi_n(K(A,n),*) \ar[rr,"(\til\sigma_n)_*"] \ar[dr,"\phi_n"'] & & \pi_n(\Omega K(A,n+1),*) \ar[dl,"\phi_{n+1}"] \\
+& A &
+\end{tikzcd}
+\]
+Moreover, $\til\sigma_n$ is a weak homotopy equivalence. The \tit{Eilenberg-MacLane spectrum} $HA$ is then given by
+\[(HA)_n=K(A,n),\ \sigma_n:S^1\smsh K(A,n)\to K(A,n+1),\]
+where $\sigma_n$ is the adjoint of $\til\sigma_n$.
+
+\begin{remark}
+It will (probably) be an exercise at some point that any two sets of choices in the definition of $HA$ give stably equivalent spectra.
+\end{remark}
+
+We have
+\[
+\pi_k(HA)=\colimit_n\pi_{n+k}(K(A,n))\cong\begin{cases}0 & k\neq0 \\ A & k=0 \end{cases}
+\]
+Moreover, there is a bijection (which hopefully we will prove later)
+\[\Ss\Hh(HA,HB)\xto{\pi_0}\Hom_\Ab(A,B),\]
+which is a glorified version of \cite[theorem IV.10]{AT1Notes}.
+
+\subsection*{Bordism Spectra/Thom Spectra}
+
+Let $Gr_n$ be the Grassmannian of $n$-planes in $\R^\infty$
+\[Gr_n=\bigcup_{k\geq0} Gr_n(\R^k)\]
+equipped with weak topology.
+On $Gr_n$ sits a \enquote{universal} $n$-plane bundle $\gamma_n$ with total space
+\[E_n=\cb{(x,L)\in\R^\infty\times Gr_n:x\in L},\]
+i.e. $\gamma_n:E_n\to Gr_n$, $(x,L)\mapsto L$.
+
+\begin{remark!}[Universality of $\gamma_n$]\label{remark:universal-n-plane-bundle}
+For\rightnote{This is the usual universal $G$-bundle story, thinly disguised by the equivalence between principal $GL_n$-bundles and $n$-dimensional vector bundles. In other words, $Gr_n$ is a classifying space for $GL_n$.} any paracompact space $X$, the map
+\[[X,Gr_n]\to\Vect_n(X),\ [f]\mapsto[f^*(\gamma_n)]\]
+is bijective, where $\Vect_n$ is the set of isomorphism classes of rank $n$ vector bundles on $X$.
+\end{remark!}
+
+The \tit{Thom Space} of $\gamma_n$ is
+\[(MO)_n=\frac{D(\gamma_n)}{S(\gamma_n)}=\frac{\text{disc bundle}}{\text{sphere bundle}}\]
+with
+\[D(\gamma_n)=\cb{(x,L)\mid |x|\leq1},\ S(\gamma_n)=\cb{(x,L)\mid |x|=1}.\]
+The $(n+1)$-plane bundle $\gamma_n\oplus\ul\R$ is classified (via Remark \ref{remark:universal-n-plane-bundle}) by a map $c:Gr_n\to Gr_{n+1}$, unique up to homotopy, such that
+\[c^*(\gamma_{n+1})\cong\gamma_n\oplus\ul{\R}\]
+and this isomorphism gives a commutative square
+\[
+\begin{tikzcd}
+\R\times E_n \ar[d,"\ul{\R}\oplus\gamma_n"] \ar[r,"\bar c"] & E_{n+1} \ar[d,"\gamma_{n+1}"] \\
+Gr_n \ar[r,"c"] & Gr_{n+1}
+\end{tikzcd}
+\]
+which defines a map of Thom spaces. The structure maps of a spectrum $MO$ are then
+\[S^1\smsh MO_n=S^1\smsh\frac{D(\gamma_n)}{S(\gamma_n)}\cong\frac{D(\ul{\R}\oplus\gamma_n)}{S(\ul{\R}\oplus\gamma_n)}\xto{\bar c}\frac{D(\gamma_{n+1})}{S(\gamma_{n+1})}=MO_{n+1}.\]
+
+\begin{theorem**}[Thom]
+The \tit{Thom-Pontryagin} construction induces an isomorphism of graded rings between $\Omega_*$, the ring of bordism classes of smooth closed manifolds (or $\Omega_k$, the abelian group of bordism classes of smooth closed $k$-manifolds) and $\pi_*(MO)$.
+\end{theorem**}
+
+\subsection*{Topological K-theory Spectra}
+
+Let $U=\colimit_{n\geq0}U(n)$ be the infinite unitary group, along
+\[U(n)\to U(n+1),\ A\mapsto\begin{pmatrix} A & 0 \\ 0 & 1 \end{pmatrix}.\]
+Bott periodicity provides a homotopy equivalence $U\xto{\simeq}\Omega^2U$.
+
+The \tit{spectra of topological K-theory} $KU$ is defined by
+\[
+(KU)_n=\begin{cases} U & \text{for }n\text{ odd} \\ \Omega U & \text{for }n\text{ even}\end{cases}
+\]
+with structure maps
+\[
+\begin{cases}
+\Sigma\Omega U\to U\text{ adjoint to }\id_{\Omega U} & \text{for }n\text{ even}\\
+\Sigma U\to\Omega U\text{ adjoint to the equivalence }U\xto{\simeq}\Omega^2 U & \text{for }n\text{ odd}
+\end{cases}
+\]
+
+$U(n)$ is path-connected (as one can easily see considering diagonalized) and one can show that $\det_*:\pi_1(U(n),*)\to\pi_1(U(1)\simeq S^1,*)\cong\Z$ is an isomorphism.
+Moreover, the inclusion $U(n)\to U(n+1)$ induces isomorphisms on $\pi_0$ and $\pi_1$ for all $n\geq1$. Then $\pi_0 (U)\cong0$ and $\pi_1 (U)\cong\Z$ implies
+\[
+\pi_k(KU)\cong\begin{cases} \Z & \text{for }k\text{ even} \\ 0 & \text{for }k\text{ odd}\end{cases}
+\]
+through Bott periodicity.
+
+\section{Orthogonal Spectra}
+
+The \enquote{motivation} part is over.
+
+Sequential spectra are fine for many purposes, such as introducing the the stable homotopy category as a triangulated category or even the $\infty$-category of spectra. But sequential spectra are not ideal for multiplicative properties (ring spectra, smash product) and equivariant generalizations. Other possible theories are symmetric spectra and unitary spectra, but it is the opinion of the Professor that orthogonal spectra are the \enquote{lesser evil}.
+
+\begin{definition!}
+A \tit{(coordinatized) orthogonal spectra} consists of
+\begin{itemize}
+    \item a based space $X_n$ for $n\geq0$,
+    \item a continuous and based action of $O(n)$ on $X_n$ for all $n\geq0$\rightnote{As $O(n)$ is compact, the product is the usual, so there is no need to worry about strange topologies.},
+    \item structure maps $\sigma_n:S^1\smsh X_n\to X_{1+n}$ such that the iterated structure map
+    \[\sigma^m_n:S^m\smsh X_n\to X_{m+n}\]
+    defined as the composite
+    \[\small S^m\!\smsh X_n\cong S^{m-1}\!\smsh S^1\!\smsh X_n\xto{S^{m-1}\smsh\sigma_n}S^{m-1}\!\smsh X_{1+n}\to S^1\!\smsh X_{m+n-1}\xto{\sigma_{m+n-1}}X_{m+n}\]
+    is $O(m)\times O(n)$-equivariant. 
+\end{itemize}
+The action on $S^m$ is the one-point compactification of the tautological action on $\R^m$.\rightnote{One could spend some more words on how this all works, but eh...} The action on $X_{m+n}$ via the block sum embedding
+    \[O(m)\times O(n)\to O(m+n),\ (A,B)\to\begin{pmatrix} A & 0 \\ 0 & B\end{pmatrix}.\]
+\end{definition!}
+
+A \tit{morphism of orthogonal spectra} $f:X\to Y$ consists of $O(n)$-equivariant based continuous maps $f_n:X_n\to Y_n$ such that the square
+\[
+\begin{tikzcd}
+S^1\smsh X_n \ar[r,"\sigma_n^X"] \ar[d,"S^1\smsh f_n"] & X_{1+n} \ar[d,"f_{1+n}"] \\
+S^1\smsh Y_n \ar[r,"\sigma_n^Y"] & Y_{1+n}
+\end{tikzcd}
+\]
+commutes. Hence we get a category $\Sp$ of orthogonal spectra, with a forgetful functor
+\[U:\Sp\to\Sp^\N\]
+defined by forgetting the action of the orthogonal groups. Homotopy groups and stable equivalences of orthogonal spectra are defined after forgetting to sequential spectra. The stable homotopy category could equivalently be defined as $\Ss\Hh=\Sp[\steq^\inv]$.
+
+\unnumpar{Suspension spectra, revisited}
+The suspension spectra $\Sigma^\infty K$ of a based space $K$ is
+\[(\Sigma^\infty K)_n=S^n\smsh K\]
+with tautological $O(n)$-action of $S^n$ and structure maps $\sigma_n:S^1\smsh S^n\smsh K\xto{\operatorname{can}\smsh K}S^{1+n}\smsh K$.
+
+Equivariance of the structure maps boils down to the map
+\[\R^m\times\R^n\to\R^{m+n}\]
+\[((\nn{x}{m}),(\nn{y}{n}))\mapsto(\nn{x}{m},\nn{y}{n})\]
+being $O(m)\times O(n)$-equivariant by construction.
+
+\unnumpar{Eilenberg-MacLane spectra, revisited}
+Let $K$ be a based space. Let $A[K]$ denote the \tit{reduced $A$-linearisation of $K$}, $A\cb{K}/A\cb{*}$. We endow $A[K]$ with the quotient topology induced by the surjective map
+\begin{align*}
+    \coprod_{n\geq0}A^n\times K^n&\to A[K]\\
+    (\nn{a}{n},\nn{k}{n})&\mapsto a_1k_1+\cdots+a_nk_n.
+\end{align*}
+
+\begin{theorem**}[Dold-Thom]
+For all $n\geq0$, the space $A[S^n]$ is a $K(A,n)$. More generally, for every based CW-complex $K$, there is a natural isomorphism
+\[\pi_k(A[K],0)\cong\til H_k(K;A)\]
+\end{theorem**}
+
+This extends to a continuous\rightnote{Here continuous means functor of $\T$-enriched categories (not limit preserving).} endofunctor of based spaces $A[-]:T_*\to T_*$. The $O(n)$-action on $S^n$ induces a continuous $O(n)$-action on $A[S^n]$. The orthogonal spectrum $HA$ is then defined by
+\[(HA)_n=A[S^n]\]
+with (continuous and equivariant!) structure maps
+\begin{align*}
+    S^1\smsh HA_n=S^1\smsh A[S^n]&\to A[S^{1+n}]=HA_{1+n}\\
+    x\smsh\sum a_iy_i&\mapsto\sum a_i(x\smsh y_i).
+\end{align*}

@@ -1,0 +1,160 @@
+% Lecture 17
+
+\chapter{Bordism Spectra and Thom's Theorem}
+
+\todo{This chapter not be in the first exam, yay!}
+
+\noindent
+Let's go!\rightnote{Little did I know that we would skip three lectures after this one...}
+
+\section{Generalized Homology Theories}
+
+\begin{definition}
+A \tit{generalized homology theory} consists of functors $E_k\to\Ab$ for all $k\in\Z$ and natural morphisms (connecting morphisms)
+\[\de:E_{k+1}(Cf)\to E_k(A)\]
+for all continuous based maps $f:A\to B$. This data has to satisfy the following axioms.
+\begin{rmnumerate}
+    \item (Additivity) For all families of based spaces $\cb{A_i}_{i\in I}$, the canonical map
+    \[\ts\bigoplus_{i\in I}E_k(A_i)\to E_k(\ts\bigvee_{i\in I}A_i)\]
+    is an isomorphism.
+    
+    \item (Homotopy invariance) If $f,g:A\to B$ are based homotopic, then $E_k(f)=E_k(g)$.
+    
+    \item (Exactness) For all $f:A\to B$ based continuous maps, the following sequence is exact:
+    \[\cdots\to E_{k+1}(Cf)\xto{\de}E_k(A)\xto{E_k(f)}E_k(B)\xto{E_k(i)}E_k(Cf)\xto{\de}\cdots.\]
+\end{rmnumerate}
+\end{definition}
+
+\begin{example!}\label{example:sequential-spectra-are-homology-theories}
+Let $E$ be a sequential spectrum. Then the functors
+\[E_k(A):=\pi_k(E\smsh A)\]
+define a generalized homology theory with respect to the connecting morphism $\de$ defined as
+\[\pi_{k+1}(E\smsh Cf)\xto{\pi_k(E\smsh p)}\pi_{k+1}(E\smsh A\smsh S^1)\underset{\cong}{\xto{(-\smsh S^1)^\inv}}\pi_k(E\smsh A)\]
+where $(-\smsh S^1)^\inv$ is the inverse of the suspension morphism.
+\end{example!}
+
+\begin{remark}
+Every general homology theory $\cb{E_k,\de}$ satisfies the following basic properties.
+\begin{rmnumerate}
+    \item[(a)] Additivity for $X=Y=*$ shows that the map
+    \[E_k(*)\oplus E_k(*)\to E_k(*\vee *)\cong E_k(*),\ (x,y)\mapsto x+y\]
+    is an isomorphism, hence $E_k(*)=0$.
+    
+    \item[(b)] If $A$ is contractible to the base point, then $E_k(A)=0$.
+    
+    \item[(c)] The unique map $t_A:A\to*$ has a long exact sequence
+    \[\cdots\to E_{k+1}(Ct_A)\xto{\de}E_k{A}\to E_k(*)\to E_k(Ct_A)\to\cdots\]
+    and the map $Ct_A=CA\cup_A*\xto{p}A\smsh S^1$ is a homeomorphism, hence we can redefine the suspension isomorphism (of singular homology fame):
+    \[E_k(A)\underset{\cong}{\xto{\de^\inv}}E_{k+1}(Ct_A)\underset{\cong}{\xto{E_{k+1}(p)}}E_{k+1}(A\smsh S^1).\]
+    
+    \item[(d)] Let $(B,A)$ be a pair of spaces, with $A\into B$ a h-cofibration. Then, as usual, the quotient map $0\cup\id_B:A\smsh[0,1]\cup_A B=C(\operatorname{incl})\to B/A$ is a based homotopy equivalence, so we get a long exact sequence
+    \[\cdots\to E_{k+1}(B/A)\xto{\delta}E_k(A)\xto{\operatorname{incl}_*}E_k(B)\xto{\operatorname{proj}_*}E_k(B/A)\to\cdots\]
+    with $\delta=\de\circ E_{k+1}(0\cup\id_B)^\inv$.
+\end{rmnumerate}
+\end{remark}
+
+\begin{remark}[Unreduced theories]
+Let $X$ be a space, $E=\{E_k,\de\}$ a generalized homology theory. The corresponding \tit{unreduced $E$-homology} is given by
+\[E^+_k(X)=E_k(X_+),\]
+i.e. the original generalized homology theory of $X$ with a disjoint basepoint added. Given that the functor $(-)_+:\T\to\T_*$ takes disjoint unions to wedges, the additivity property for the original theory gives an isomorphism
+\[\ts\bigoplus_{i\in I}E^+_k(A_i)\to E^+_k(\ts\coprod_{i\in I}A_i).\]
+Unreduced generalized homology theories give a slightly different version of what a \enquote{generalized homology theory} should be, and often people denote them with $E$ and the reduced (or based) version with $\til E$, but the Professor thinks that reduced homology theories are more fundamental, or at least that they tend to appear more.
+\end{remark}
+
+\begin{remark}[Relative theories]
+We can easily get a relative version of generalized homology theories. For a pair of spaces $(X,Y)$ we write \[CY\cup_Y X=\frac{Y\times[0,1]\cup_Y X}{Y\times\cb{0}}\]
+for the \tit{unreduced cone}, based at the tip, the class of $Y\times\cb{0}$. Then, given a generalized homology theory $E$, the corresponding \tit{relative $E$-homology} is given by
+\[E_k(X,Y)=E_k(CY\cup_Y X).\]
+The unreduced cone is homeomorphic to the reduced cone of $i_+:Y_+\to X_+$. Hnece we get a long exact sequence
+\[\cdots\to E_{k+1}(X,Y)\xto{\de}E^+_k(Y)\xto{\operatorname{(incl_+)_*}}E^+_k(X)\to E_k(X,Y)\to\cdots.\]
+Note that for $X$ based by $x_0$ we have $E_k(X,\cb{x_0})\cong E_k(X)$.
+\end{remark}
+
+\begin{proposition}\label{proposition:mapping-telescope-is-homotopy-colimit-generalized}
+Let $\cb{E_k,\de}$ be a generalized homology theory. Let $\tel_{i\ge0} X_i$ be the mapping telescope of a sequence of continuous maps
+\[X_0\xto{f_0}X_1\xto{f_1}X_2\xto{f_2}\cdots.\]
+Then the canonical maps $j_m:X_m\to\tel_{i\ge0} X_i$ induces an isomorphism
+\[\colimit_n E^+_k(X_n)\xto{\cong}E^+_k(\tel_{i\ge0} X_i).\]
+\end{proposition}
+
+\begin{proof}
+Write the mapping telescope as the pushout of the appropriate span
+\[\coprod_{i\ge0} (X_i\times[0,1])\from\coprod_{i\ge0} (X_i\times\{0,1\})\to\coprod_{i\ge0} X_i.\]
+The map $\coprod_{i\ge0} (X_i\times\{0,1\})\to\coprod_{i\ge0} (X_i\times[0,1])$ is a cofibration, because cofibrations are closed under product with an identity and coproducts (both facts are easy to prove although not necessarily obvious), so its cobase change is also a cofibration. With this data we obtain a long exact sequence
+\[\cdots\to E_{k+1}(\bigvee_{i\ge0}(X_i)_+\smsh S^1)\to E^+_k(\coprod_{i\ge0}X_i)\to E^+_k(\tel_{i\ge0}X_i)\to E_k(\bigvee_{i\ge0}(X_i)_+\smsh S^1)\to\cdots.\]
+Using additivity and the suspension isomorphism we modify the sequence to get
+\[\cdots\to\bigoplus_{i\ge0}E^+_k(X_i)\xto{\Delta} \bigoplus_{i\ge0} E^+_k(\coprod_{i\ge0}X_i)\to E^+_k(\tel_{i\ge0}X_i)\to\bigoplus_{i\ge0}E^+_{k-1}(X_i)\to\cdots.\]
+If one tries really hard, they can show that the map $\Delta$ is $x\mapsto x-(f_i)_*(x)$, which is injective, hence
+\[E^+_k(\tel_{i\ge0}X_i)\cong\coker\Delta\]
+which is a presentation of $\colimit_n E^+_k(X_n)$.
+\end{proof}
+
+If $X$ is a CW-complex with skeleta $X_i$, then the quotient map collapsing the intervals
+\[\tel_{i\ge0} X_i\to \cup X_i=X\]
+is a homotopy equivalence. Hence we get the following corollary.
+
+\begin{corollary}
+For a CW-complex $X$ with skeleta $X_i$ and a generalized homology theory $\cb{E_k,\de}$, the morphism
+\[\colimit_{n\ge0}E_k(X_n)\xto{\cong}E_k(X)\]
+is an isomorphism.
+\end{corollary}
+
+We have seen in example \ref{example:sequential-spectra-are-homology-theories} that sequential spectra are enough to represent generalized homology theories, but if instead we have orthogonal ring spectra we obtain additional structure, as we now describe.
+
+\begin{construction!}[Exterior products]\label{construction:exterior-products}
+Let $E$ be an orthogonal ring spectrum. Then the homology theory represented by $E$ supports exterior products
+\[\times:E_k(A)\times E_l(B)\to E_{k+l}(A\smsh B)\]
+defined as we now describe. Let $f:S^{n+k}\to E_m\smsh A$ and $g:S^{n+l}\to E_n\smsh B$ represent classes in $E_k(A)=\pi_k(E\smsh A)$ and $E_l(B)=\pi_l(E\smsh B)$, we write $f\cdot g$ for the composite
+\[S^{m+k+n+l}\xto{f\smsh g}E_m\smsh A\smsh E_n\smsh B\xto{\cong}E_m\smsh E_n\smsh A\smsh B\xto{\mu_{m,n}\smsh A\smsh B}E_{m+n}\smsh A\smsh B.\]
+Then we define
+\[[f]\times[g]=(-1)^{kn}[f\cdot g]\]
+which is an element of $\pi_{k+l}(E\smsh A\smsh B)=E_{k+l}(A\smsh B)$. If $A=S^0$ the definition has to be modified slightly (in the obvious way).
+\end{construction!}
+
+\begin{proposition}
+If $E$ is an orthogonal ring spectrum, the pairings defined in the previous paragraph (construction \ref{construction:exterior-products}) are associative, unital and graded-commutative and as such they make the $E$-homology groups $E_*(B)=\cb{E_k(B)}_{b\in\Z}$ into a graded module over the graded ring $\pi_*(E)$.
+\end{proposition}
+
+\section{Bordism}
+
+\begin{definition}
+A \tit{singular manifold} of dimension $k$ over a space $X$ is a pair $(M,h)$ consisting of a smooth closed manifold $M$ and a continuous map $h:M\to X$. Two singular $k$-manifolds $(M,h)$ and $(M',h')$ over $X$ are \tit{bordant} if there is a \tit{bordism} between them, where the latter is a triple $(B,H,\psi)$ consisting of
+\begin{itemize}
+    \item a compact smooth $(k+1)$-manifold $B$,
+    \item a continuous map $H:B\to X$,
+    \item a diffeomorphism $M\amalg M'\underset{\cong}{\xto{\psi}}\de B$ such that
+    \[
+    easydiagram
+    \]
+\end{itemize}
+\end{definition}
+
+Bordism of singular $k$-manifolds over $X$ is an equivalence relation (reflexivity and symmetry are clear, transitivity come from ???).
+
+We denote by $\Nn_k(X)$ the set of bordism classes of singular $k$-manifold over $X$ it becomes a group if we endow it with the operation of disjoint union in $M$.
+
+Observe that for all $x\in\Nn_k(X)$ we have the relation $2x=0$, because...?\todo{add little proof!} In particular, this means that $\Nn_k(X)$ is an $\FF_2$-vector space.
+
+Also, we have that $\Nn_k(X)$ is a functor $\T\to\Ab$ by postcomposition with continuous maps $X\to Y$.
+
+\begin{proposition}
+The follow
+\begin{rmnumerate}
+    \item Let $\phi,\phi':X\to Y$ be homotopic, then \[\phi_*=\phi'_*:\Nn_k(X)\to\Nn_k(Y).\]
+    
+    \item For every weak equivalence $\phi:X\to Y$, the map $\phi_*:\Nn_k(X)\to\Nn_k(Y)$ is an isomorphism.
+    
+    \item For all families of spaces $\cb{X_i}_{i\in I}$, the canonical map
+    \[\bigoplus_{i\in I}\Nn_k(X_i)\to\Nn_k(\coprod_{i\in I}X_i)\]
+    is an isomorphism.
+\end{rmnumerate}
+\end{proposition}
+
+\begin{proof}
+Eh.
+
+\medskip
+\todo[inline,color=red]{TODO}
+\smallskip
+
+\end{proof}

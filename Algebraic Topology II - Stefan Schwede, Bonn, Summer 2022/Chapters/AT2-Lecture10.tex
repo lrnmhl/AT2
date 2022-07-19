@@ -1,0 +1,221 @@
+% Lecture 10
+
+\section{Cofibration Categories}
+
+\lecture[]{2022-05-16}
+
+\begin{definition}
+A \tit{cofibration category}\rightnote{This notion is clearly modeled after the one of model category, and was introduced (as fibration cate-\\gories, by Ken Brown) when model categories had already an established theory; we consider cofib-\\ration categories because they are simpler, but the notion is \href{https://mathoverflow.net/questions/62386/examples-of-brown-cofibration-categories-that-are-not-quillen-model-categories}{of interest in its own right}.} is a triple $(\Cc,\Cof,W)$ consisting of a category $\Cc$ and two distinguished classes of morphisms the cofibrations $\Cof$ and the weak equivalences $W$, satisfying the following axioms.
+\begin{itemize}
+    \item[(C1)] Isomorphisms are cofibrations and weak equivalences. Cofibrations are closed under composition. There is an initial object $\emptyset$ and all initial morphisms are cofibrations.
+    \item[(C2)] If $g$ and $f$ are composable and two out of $g$, $f$ and $gf$ are weak equivalences, then so is the third.
+    \item[(C3)] Given a cofibration $i:A\to B$ and any morphism $f:A\to C$, there is a pushout in $\Cc$
+    \[
+    \begin{tikzcd}
+    A \ar[d,"i"] \ar[r,"f"] & C \ar[d,"j"]\\
+    B \ar[r] & D
+    \end{tikzcd}
+    \]
+    and $j$ is again a cofibration. If in addition, $i$ is a weak equivalence, then so is $j$.
+    \item[(C4)] Every morphism in $\Cc$ can be factored as a composite of a cofibration followed by a weak equivalence.
+\end{itemize}
+
+An \tit{acyclic cofibration} (or \tit{trivial} cofibration) is a morphism that is both a cofibration and a weak equivalence. Cofibration are denoted by $a\tto b$, weak equivalences by $a\xto{\sim}b$ and acyclic cofibrations by $a\acco b$.
+\end{definition}
+
+An immediate consequence of the definitions (in particular, of C1 and C3) is that finite coproducts exist in $\Cc$. Moreover, the two canonical morphisms
+\[A\to A\amalg B\leftarrow B\]
+are cofibrations. We can see that the coproduct of two cofibrations $i:A\to B$ and $i':A'\to B'$ is a cofibration, by applying C3 twice and then C2:
+\[
+    \begin{tikzcd}
+    A \ar[d] \ar[r,"i"] & B \ar[d]\\
+    A\amalg A' \ar[r,"i\amalg A'"] & B\amalg A'
+    \end{tikzcd}\quad
+    \begin{tikzcd}
+    A' \ar[d] \ar[r,"i'"] & B' \ar[d]\\
+    B\amalg A' \ar[r,"B\amalg i'"] & B\amalg B'
+    \end{tikzcd}
+\]
+\[
+\begin{tikzcd}
+A\amalg A' \ar[dr,"i\amalg A'"'] \ar[rr,"i\amalg i'"] & & B\amalg B'\\
+ & B\amalg A' \ar[ur,"B\amalg i'"']
+\end{tikzcd}
+\]
+Similarly, the coproduct of two acyclic cofibrations is an acyclic cofibration.
+
+The \tit{homotopy category} of a cofibration is the localization\rightnote{Note that this depends only on $W$ and not on $\Cof$.}
+\[\gamma:\Cc\to\Ho(\Cc)\]
+at the class $W$.
+
+\begin{definition}
+A morphism of orthogonal spectra $f:A\to B$ is a h-cofibration (of spectra) if it has the homotopy extension property: for every morphism of orthogonal spectra $\phi:B\to X$ and every homotopy $H:A\smsh[0,1]_+\to X$ starting with $\phi\circ f:A\to X$, there is a homotopy $\bar H:B\smsh[0,1]_+\to X$ that extends $H$ and begins with $\phi$, i.e. such that
+\[\bar H\circ(f\smsh[0,1]_+)=H\text{ and }\bar H\circ(-\smsh0)=\phi.\]
+In particular, h-cofibrations of orthogonal spectra are levelwise h-cofibrations of spaces.
+\end{definition}
+
+There is a universal test case, i.e. when $X=M_f=(A\smsh[0,1]_+)\cup_f B$, the mapping cone of $f$. In this case we have
+\[
+\begin{tikzcd}
+A \arrow[r, "f"] \arrow[d, "- \smsh 0", swap] & B \arrow[d] \arrow[rrddd, "\phi", bend left]\\
+{A \smsh [0,1]_+} \arrow[rrrdd, bend right=20] \arrow[r] & {(A \smsh [0,1]_+) \cup_f B = M_f} \arrow[dr]\\
+ & &[-4em] {B \smsh [0,1]_+} \arrow[dr, dashed, "\bar H"]\\
+ & & &[+1em] X
+\end{tikzcd}
+\]
+so $f$ is a h-cofibration if and only if the canonical morphism
+\[A\smsh[0,1]_+\cup_f B\to B\smsh[0,1]_+\]
+has a retraction.
+
+There is an adjoint form of the HEP. Any given homotopy extension data $(\phi,H)$ adjoins to a commutative square
+\[
+\begin{tikzcd}[column sep=large]
+A \arrow[r, "\tilde{H}"] \arrow[d, "f", swap] & {X^{[0,1]}} \arrow[d, "\ev_0"]\\
+B \arrow[ur, "\tilde{H}'", dashed] \arrow[r, "\phi", swap] & X
+\end{tikzcd}
+\]
+The h-cofibrations are precisely the class of morphism that have the left lifting property against all evaluations $\ev_0:X^{[0,1]}\to X$ for all $X\in\Sp$.
+
+\begin{exercise}[AT2Sheet6.1]
+There is an important general nonsense fact: let $\Ee$ be a class of morphism in a category $\Cc$. Let $^\perp\Ee$ be the class of morphism with LLP against all morphisms in $\Ee.$
+Then $^\perp\Ee$ is closed under
+\begin{itemize}
+    \item cobase change,
+    \item sequential composition,
+    \item composition,
+    \item retract.
+\end{itemize}
+In particular, the h-cofibrations of orthogonal spectra have all these closure properties.
+\end{exercise}
+
+We can now put a cofibration structure on modules over a ring spectra.
+
+\begin{theorem}\label{theorem:cofibration-structure-on-modules-over-a-ring-spectra}
+The following data defines a cofibration structure on the category of left modules over an orthogonal ring spectrum:
+\begin{itemize}
+    \item weak equivalences are stable equivalences of underlying orthogonal spectra,
+    \item cofibrations are h-cofibrations of underlying orthogonal spectra.
+\end{itemize}
+\end{theorem}
+
+\begin{proof}
+We just have to go diligently through the axioms.\rightnote{See AT2Sheet6.2 (and 6.3) for other (sometimes) inter-\\esting examples\\ of (co)fibration categories.}
+
+(C1) All isomorphisms are clearly cofibrations and weak equivalences. There is an initial object and it is easy to see that the morphism $*\to X$ is an h-cofibration. Finally, h-cofibrations are stable under composition by AT2Sheet6.1.
+
+(C2) Clearly holds.
+
+(C3) Cofibrations are stable under cobase change again by AT2Sheet6.1 and acyclic cofibrations are stable under cobase change by proposition \ref{proposition:preservation-of-stable-equivalences}.
+
+(C4)\rightnote{The factorization property is usually much more difficult to prove for model structures and generally relies on the \href{https://ncatlab.org/nlab/show/small+object+argument}{small object argument}.} Let $f:X\to Y$ be a morphism of $R$-modules. We factor it through the mapping cylinder as the composite of the mapping cylinder inclusion $-\smsh0:x\to (X\smsh[0,1]_+)\cup_f Y$ and the projection $(X\smsh[0,1]_+)\cup_f Y\to Y$. This projection is a homotopy equivalence of orthogonal spectra, hence a stable equivalence. We consider now the pushout square
+\[
+\begin{tikzcd}
+X\coprod X \ar[d,tail,"(-\smsh0)\amalg(-\smsh1)"'] \ar[r,tail,"\id_X\amalg f"] & X\coprod Y \ar[d,tail]\\
+X\smsh[0,1]_+ \ar[r,""] & (X\smsh[0,1]_+)\cup_f Y
+\end{tikzcd}
+\]
+The left vertical morphism is an h-cofibration, hence so is the right vertical morphism. Since the inclusion $X\mapsto X\coprod Y$ is a cofibration, we can conclude that the mapping cylinder inclusion also is $-\smsh0:x\to (X\smsh[0,1]_+)\cup_f Y$.
+\end{proof}
+
+\begin{remark}
+The stable equivalences of $R$-modules can be complemented by various different classes of cofibrations into cofibration categories, e.g.
+\begin{itemize}
+    \item HEP internal to $R$-modules,
+    \item cofibrations in some model category structure.
+\end{itemize}
+Overall, it is the opinion of the professor that the approach we are taking is the shortest path.
+\end{remark}
+
+\begin{proposition}[Gluing lemma]
+Let $\Cc$ be a cofibration category and
+\[
+\begin{tikzcd}
+A \ar[d,"\sim"] & B \ar[l,tail,"i"'] \ar[d,"\sim"] \ar[r,"f"] & C \ar[d,"\sim"]\\
+A' & B' \ar[l,tail,"i'"] \ar[r,"f'"'] & C
+\end{tikzcd}
+\]
+such that $i$ and $i'$ are cofibrations and all the vertical morphisms are weak equivalences. Then the induced morphism
+\[A\cup_B C\to A'\cup_{B'}C'\]
+is a weak equivalence.
+
+As a special case the diagram
+\[
+\begin{tikzcd}
+A \ar[d,eq] & B \ar[l,tail,"i"] \ar[d,eq] \ar[r,eq] & B \ar[d,"\sim","f"']\\
+A & B \ar[l,tail,"i"] \ar[r,"f","\sim"'] & C
+\end{tikzcd}
+\]
+yields
+\[
+\begin{tikzcd}
+B \ar[d,"\sim","f"'] \ar[r,tail] & A \ar[d,"\sim"]\\
+C \ar[r,tail] & A\cup_B C
+\end{tikzcd}
+\]
+\end{proposition}
+
+\begin{proof}[(Not quite a) Proof]
+This is an important technical lemma, related to \href{https://ncatlab.org/nlab/show/homotopy+pullback}{homotopy pushouts}, but we do not present a proof here (it is a rather dry proof, not very illuminating), a reference is \cite[Lemma 1.4.3]{rad}. Note that the special case implies that our cofibration categories are always \href{https://ncatlab.org/nlab/show/proper+model+category#left_proper_model_categories}{left proper}.
+\end{proof}
+
+\subsection{The homotopy relation}
+
+\begin{definition}
+Let $\Cc$ be a cofibration category. A \tit{cylinder object} for an object $A$ is a quadruple $(I,i_0,i_1,p)$\rightnote{The cylinder object is far from unique!} where $I$ is a $\Cc$-object, the diagram
+\[
+\begin{tikzcd}[row sep=small]
+A \arrow[dr, "i_0", swap] \arrow[rrd, bend left, "\id"]\\
+ & I \arrow[r, "p"] & A\\
+A \arrow[ur, "i_1"] \arrow[rru, bend right, "\id"']
+\end{tikzcd}
+\]
+commutes, $p$ is a weak equivalence and $i_0+i_1:A\amalg A\to I$ is a cofibration (note that $i_0$ and $i_1$ are weak equivalences by 2-out-of-3).
+\end{definition}
+
+Cylinder objects always exist: it suffices to use (C4) to factor the fold map $\nabla=\id+\id:A\amalg A\to A$ into
+\[
+\begin{tikzcd}
+A\amalg A \ar[r,tail,"i_0+i_1"] &[+1em] I \ar[r,"\sim"] & A.
+\end{tikzcd}
+\]
+
+\begin{definition}
+Two morphisms $f,g:A\to Z$ are homotopic\rightnote{This definition of homotopy has a degree of flexibility because cylinder objects are not unique.} if there is a cylinder object $(I,i_0,i_1,p)$ for $A$ and a morphism (the homotopy):
+\[H:I\to Z\]
+such that $H\circ i_0=f$ and $H\circ i_1=g$. In this case we write $f\simeq g$.
+\end{definition}
+
+By the usual argument, the localization functor $\gamma:\Cc\to\Ho(\Cc)$ takes the same value on homotopic morphisms.
+
+\begin{example}
+Considering the cofibration structure on $\RMod$ given in theorem \ref{theorem:cofibration-structure-on-modules-over-a-ring-spectra}, the following is a cylinder object
+\[M\vee M=M\smsh\cb{0,1}_+\rightarrowtail M\smsh[0,1]_+\xto{p}M\]
+where the first map is a h-cofibration and $p$ is the map collapsing $[0,1)$ to $*$, which is a stable equivalence. So the morphisms in $\RMod$ that are homotopic in the classical/concrete sense (via $M\smsh[0,1]_+$) are also homotopic in the abstract sense. But note that the converse is not true! Abstract homotopy is strictly more general than concrete homotopy.
+\end{example}
+
+\begin{proposition}
+Let $A$ and $Z$ be objects in a cofibration category $\Cc$.
+\begin{rmnumerate}
+\item \enquote{Being homotopic} is an equivalence relation on $\Cc(A,Z)$.
+\item Postcomposition with any morphism $\phi:Z\to Z'$ preserves the homotopy relation.
+\item Let $f,g:A\to Z$ be homotopic and let $\phi:\bar A\to A$ be any morphism. Then there is an acyclic cofibration $s:Z\acco Z'$ such that $sf\phi\simeq sg\phi$ are homotopic.
+\item Let $f,g:A\to Z$ and $\tau:\bar A\to A$ a weak equivalence. If $f\tau\simeq g\tau:\bar A\to Z$, then $f\sim g$.
+\end{rmnumerate}
+\end{proposition}
+
+\begin{proof}\renewcommand{\qed}{\hfill\tit{To be continued...}}
+(i) Reflexivity. Let $(I,i_0,i_1,p)$ be a cylinder object for $A$. Then set
+\[H=f\circ p.\]
+We have 
+\[Hi_0=fpi_0=f=fpi_1=Hi_1,\]
+so $H$ is a homotopy from $f$ to $f$.
+
+Symmetry. Let $H:I\to Z$ be a homotopy from $f$ to $g$ based on $(I,i_0,i_1,p)$. Then the same $H:I\to Z$ is a homotopy from $g$ to $f$ based on $(I,i_1,i_0,p)$.
+
+Transitivity. This one is annoying.
+
+\medskip
+\todo[inline,color=red]{finish typing up!}
+\smallskip
+
+\end{proof}

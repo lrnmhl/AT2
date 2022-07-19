@@ -1,0 +1,107 @@
+% Lecture 16
+
+\lecture[]{2022-06-15}
+
+(T5) We prove a seemingly weaker version of the axiom, which turns out to imply the stronger version.
+
+\medskip
+\todo[inline,color=red]{TODO}
+\smallskip
+
+\qed
+
+\begin{example}
+Let $R$ be an orthogonal ring spectrum (e.g. the sphere spectrum). A functorial cone on $\RMod$ is given by $M\smsh[0,1]$ and
+\[\iota_M=-\smsh1:M\to M\smsh[0,1].\]
+A cokernel of $\iota_M$ is the morphism
+\[M\smsh t:M\smsh[0,1]\to M\smsh S^1.\]
+So for this choice of functorial cone and cokernel, we obtain $\Sigma M=M\smsh S^1$. The derived category $D(R)$ is triangulated with suspension functor $M\smsh S^1$ and distinguished triangles isomorphic to
+\[M\xto{\gamma(f)}N\xto{\gamma(i)}(M\smsh[0,1])\cup_\psi N\xto{\gamma(p)}M\smsh S^1.\]
+\end{example}
+
+\begin{example}
+Let $\Aa$ be an additive category and consider $\Ch(\Aa)$, the category of $\Z$-graded chain complexes in $\Aa$. The category $\Kk(\Aa)$ is the homotopy category of $\Aa$, with objects $\Z$-graded chain complexes in $\Aa$ and morphisms the chain maps modulo chain homotopy. We show in AT2Sheet7.1 that $\Ch(\Aa)\to\Kk(\Aa)$ is a localization at the class of chain homotopy equivalences. Moreover clearly $\Kk(\Aa)$ is additive.
+
+The cone of a complex $A\in\Ch(\Aa)$ is the complex $CA$ with
+\[(CA)_n=A_n\oplus A_{n-1},\ d(a,a')=(da+(-1)^na',da')\]
+and $\iota_A:A\to CA$ the inclusion of the first summand. We have that $CA$ is chain contractible and $A\to CA$ is a cofibration. A chain map $f:A\to B$ is a cofibration if there are objects $C_n$ for $n\in\Z$ and isomorphisms $A_n\oplus C_n\cong B_n$ that restrict to $f_n:A_n\to B_n$. The cofibration and the chain homotopy equivalences are a cofibration category with functorial cone.
+
+The shift $A[1]$ of $A\in\Ch(\Aa)$ is given by $(A[1])_n=A_{n-1}$ with reindexed differential. The projection to the second summand
+\[CA\to A[1]\]
+exhibits $A[1]$ as a cokernel of $\iota_A:A\to CA$, so $\Sigma A=A[1]$.
+
+Then we have that $\Kk(\Aa)$ is a triangulated category with respect to the shift functor and the triangles that are isomorphic to 
+\[A\xto{\gamma(\psi)}B\xto{\gamma(i)}C\psi\xto{\gamma(p)}A[1]\]
+where $(C\psi)_n=B_n\oplus A_{n-1}$.
+\end{example}
+
+\begin{example}
+Let $\Aa$ be an abelian category. As we saw in AT2Sheet6.2, there is another cofibration structure on $\Ch(\Aa)$ with the same cofibrations and quasi-isomorphisms as weak equivalences. Let $\gamma:\Ch(\Aa)\to\Dd(\Aa)$ be a localization at the class of quasi-isomorphisms; the target $\Dd(\Aa)$ is called the derived category of $\Aa$.
+
+The derived category $\Dd(\Aa)$ is triangulated with shift as the suspension functor and distinguished triangle the images of the distinguished triangles in $\Kk(\Aa)$.
+\end{example}
+
+\begin{theorem}
+For every ring $S$, there is an equivalences of triangulated categories
+\[\Dd({}_{S\!}\Mod)\cong\Dd(HS)\]
+\end{theorem}
+
+\begin{proposition}
+Let $\T$ be a triangulated category.
+\begin{rmnumerate}
+    \item For every distinguished triangle $(f,g,h)$ and every $\T$-object $X$, the following sequences are exact
+    \[\T(\Sigma A,X)\xto{\T(h,X)}\T(C,X)\xto{\T(g,X)}\T(B,X)\xto{\T(f,X)}\T(A,X),\]
+    \[\T(X,A)\xto{\T(X,f)}\T(X,B)\xto{\T(X,g)}\T(X,C)\xto{\T(X,h)}\T(X,\Sigma A).\]
+    
+    \item Awakened five lemma. Let $(a,b,c)$ be a morphism between distinguished triangles. Then if two of $a$, $b$ and $c$ are isomorphisms, so is the third.
+    
+    \item Let $(f,g,h)$ be a triangle such that $(g,h,-\Sigma f)$ is distinguished. Then $(f,g,h)$ is also distinguished.
+    
+    \item Let $(f_1,g_1,h_1)$, $(f_2,g_2,h_2)$ and $(f_3,g_3,h_3)$ be distinguished triangles such that $f_3=f_2\circ f_1$. Then there are morphisms $\bar x$ and $\bar y$ such that $(\bar x,\bar y,(\Sigma g_1)\circ h_2)$ is distinguished and the following commutes
+    \[
+    somebigdiagram
+    \]
+    
+    \item For every distinguished triangle, the following are equivalent.
+    \begin{itemize}
+        \item The morphism $f:A\to B$ has a retraction.
+        \item The morphism $g:B\to C$ has a retraction.
+        \item The morphism $h:C\to\Sigma A$ is the $0$-morphism.
+    \end{itemize}
+    
+    \item If $(f,g,h)$ is distinguished and $s:C\to B$ is such that $gs=\id_C$, then the morphisms $f:A\to B$ and $s:C\to B$ present $B$ as a coproduct of $A$ and $C$ (the familiar $B=A\oplus C$).
+    
+    \item Let $I$ be a set and $\cb{(f_i,g_ih_i)}_{i\in I}$ be a family of distinguished triangles, then the following triangles are also distinguished
+    \[\ts\bigoplus_{i\in I}A_i\xto{\oplus_i f_i}\ts\bigoplus_{i\in I}B_i\xto{\oplus_i g_i}\ts\bigoplus_{i\in I}C_i\xto{\operatorname{can}\circ(\oplus_i h_i)}\Sigma(\ts\bigoplus_{i\in I} A_i),\]
+    \[\ts\prod_{i\in I}A_i\xto{\Pi_i f_i}\ts\prod_{i\in I}B_i\xto{\Pi_i g_i}\ts\prod_{i\in I}C_i\xto{\operatorname{can}^\inv\circ(\Pi_i h_i)}\Sigma(\ts\prod_{i\in I} A_i).\]
+    
+    \item If $A\oplus B$ is a coproduct of $A$ and $B$ in $\T$ with canonical morphisms $i_A:A\to A\oplus B$, $i_B:B\to A\oplus B$, then the following triangle is distinguished
+    \[A\xto{i_A}A\oplus B\xto{p_B}B\xto{0}\Sigma A\]
+    where $p_B$ is characterized by $p_Bi_A=0$ and $P_Bi_B=\id_B$.
+\end{rmnumerate}
+\end{proposition}
+
+\begin{proof}
+(i) Exactness at $\T(B,X)$. If $(f,g,h)$ is distinguished, then $gf=0$. We have
+\[
+\begin{tikzcd}
+A \ar[d,eq] \ar[r,eq] & A \ar[d,"f"] \ar[r] & 0 \ar[d,dashed,"c"',"\text{(T4)}"] \ar[r] & \Sigma A \ar[d,eq]\\
+A \ar[r,"f"'] & B \ar[r,"g"'] & C \ar[r,"h"'] & \Sigma A
+\end{tikzcd}
+\]
+where the first row is distinguished by (T2). To conclude, let $\psi:B\to X$ be in the kernel of $f^*$, i.e. $\psi\circ f=0:A\to X$. Applying (T4) to
+\[
+\begin{tikzcd}
+A \ar[d] \ar[r,"f"] & B \ar[d,"\psi"] \ar[r,"g"] & C \ar[d,dashed,"\psi"] \ar[r,"h"] & \Sigma A \ar[d]\\
+0 \ar[r] & X \ar[r,eq] & X \ar[r] & 0
+\end{tikzcd}
+\]
+we get that $\phi g=g^*(\phi)=\psi$. So $psi\in\im(g^*)$.
+
+(ii) We first treat the case...
+
+\medskip
+\todo[inline,color=red]{TODO}
+\smallskip
+
+\end{proof}

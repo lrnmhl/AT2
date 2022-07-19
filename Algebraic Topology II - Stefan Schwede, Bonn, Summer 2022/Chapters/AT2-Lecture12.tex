@@ -1,0 +1,156 @@
+% Lecture 12
+
+\lecture[]{2022-05-25}
+
+Unitality is clear. We are left to prove associativity.
+
+\medskip
+\todo[inline,color=red]{TODO}
+\medskip
+
+(ii) This one is easy.
+
+\medskip
+\todo[inline,color=red]{TODO}
+\medskip
+
+(iii) A bit longer but not more difficult.
+
+\medskip
+\todo[inline,color=red]{TODO}
+\medskip
+
+(iv) Essentially by definition.
+
+(v) We will use the following fact.
+
+Claim. For all $f:A\to B$ there is a factorization $f=qj$ such that $j:A\to Z$ is a cofibration and $q:Z\to B$ is left inverse to an acyclic cofibration.
+
+\begin{claimproof}
+We mimic the construction of the the mapping cylinder in this more general context. Let $(I,i_0,i_1,p)$ be a cylinder object for $A$. We chose a pushout
+\medskip
+\todo[inline,color=red]{add diagram!}
+\smallskip\noindent
+hence
+\[qj=q\phi i_0=fpi_0=f.\]
+We have another pushout
+\medskip
+\todo[inline,color=red]{add diagram!}
+\smallskip\noindent
+so $j$ is also a cofibration.\todo[color=red]{Explain better!}
+\end{claimproof}
+
+Now we let $f:A\xto{\sim}$ be any weak equivalence. Factor it as above
+\[f=q\circ j\]
+with $j:A\tailto Z$, $q:Z\acco B$, $r,B\acco Z$, $qr=\id_B$. Here $q$ is a weak equivalence by 2-out-of-3. Then $j$ is an acyclic cofibration by 2-out-of-3, so by (iii) the maps $\gamma(j)$ and $\gamma(r)$ are isomorphisms. Now
+\[\gamma(q)\circ\gamma(r)=\gamma(qr)=\gamma(\id)=\id,\]
+so $\gamma(q)$ is an isomorphism with $\gamma(q)=\gamma(r)^\inv$. Moreover,
+\[\gamma(f)=\gamma(qj)=\gamma(q)\circ\gamma(j)\]
+is an isomorphism which also equals $\gamma(r)^\inv\circ\gamma(j)=r\bs j$.
+
+(v) This is very similar to proofs we've seen in the past.
+
+\medskip
+\todo[inline,color=red]{TODO}
+\smallskip
+
+\qed
+
+\begin{corollary}\label{corollary:homotopy-category-has-calculus-of-fractions}
+Let $\Cc$ be a cofibration category and $\gamma:\Cc\to\Ho(\Cc)$ a localization at the class of weak equivalences.
+\begin{rmnumerate}
+    \item Every morphism in $\Ho(\Cc)$ is a \enquote{left fraction}, i.e. of the form $\gamma(\tau)^\inv\circ\gamma(f)$ for two $\Cc$-morphisms $f,\tau$ with common target and $\tau$ an acyclic cofibration.
+    \item Given the two morphisms $f,g:A\to B$ in $\Cc$, $\gamma(f)=\gamma(g)$ if and only if there is an acyclic cofibration $s:B\acco B'$ auch that $sf\simeq sg$.
+\end{rmnumerate}
+\end{corollary}
+
+\begin{proof}
+We prove (ii), as (i) was already proved in theorem \ref{theorem:homotopy-category-is-localization}.
+
+$(\impliedby)$ If $s$ is an acyclic cofibration with $sf\sim sg$, then
+\[\gamma(s)\circ\gamma(f)=\gamma(sf)=\gamma(sg)=\gamma(s)\circ\gamma(g),\]
+hence $\gamma(s)$ being invertible implies $\gamma(f)=\gamma(g)$.
+
+$(\implies)$ Suppose that $\gamma(f)=\gamma(g)$, i.e. $(f,\id_B)\approx(g,\id_B)$. In other words, there are acyclic cofibrations $a:B\acco\bar Z$, $b:B\acco\bar Z$ such that in the diagram
+\[
+\begin{tikzcd}
+ & B \ar[d,tail,"a"',"\sim"] \ar[dr,eq] & \\
+A \ar[dr,"g"'] \ar[ur,"f"] & Z & B \ar[dl,eq]\\
+ & B \ar[u,tail,"b","\sim"'] & 
+\end{tikzcd}
+\]
+the triangles commute up to homotopy, i.e. $fa\simeq gb$ and $a\simeq b$. We choose a pushout
+\[
+\begin{tikzcd}
+B \ar[d,tail,"a"',"\sim"] \ar[r,tail,"b","\sim"'] & Z \ar[d,tail,"\psi","\sim"']\\
+Z \ar[r,tail,"\sim","\phi"'] & W
+\end{tikzcd}
+\]
+Postcomposition preservers homotopy, so $\phi a=\psi b\simeq\psi a$. Since $a$ is a weak equivalence, we get $\phi\simeq\psi$. 
+There is an acyclic cofibration $t:W\to\bar B$ such that $t\phi af\simeq t\psi af$.
+Since the homotopy relation is transitive we get
+\[t\phi af\simeq t\psi af\simeq t\psi bg=t\phi ag.\]
+So the acyclic cofibration $t\phi a:B\to\bar B$ has the desired property.
+\end{proof}
+
+\subsection{Some simple (co)limits}
+
+In general homotopy categories have very few limits and colimits (look up homotopy (co)limits). Still, we can prove that we do at least have products and coproducts (which may sound like not much but is actually not at all a given nor very easy to prove!).
+
+\begin{proposition}\label{proposition:homotopy-category-has-coproducts}
+Let $\Cc$ be a cofibration category.
+\begin{rmnumerate}
+    \item The localization functor $\gamma:\Cc\to\Ho(\Cc)$ preserves finite coproducts. In particular, $\Ho(\Cc)$ has finite coproducts.
+    \item Suppose that $\Cc$ has $I$-indexed coproducts, and that the classes of weak equivalences and cofibrations are closed under $I$-indexed coproducts. Then $\gamma:\Cc\to\Ho(\Cc)$ preserves  $I$-indexed coproducts. In particular, $\Ho(\Cc)$ has $I$-indexed coproducts.
+\end{rmnumerate}
+\end{proposition}
+
+\begin{proof}
+The first point is an immediate consequence of the first. For the second point, let $I$ be any set and $\cb{X_i}_{i\in I}$ a family of $\Cc$-objects with coproduct $\coprod_{i\in I}X_i$ and morphisms $\kappa_j:X_j\to\coprod_{i\in I}X_i$. We show that the image of this coproduct under $\gamma:\Cc\to\Ho(\Cc)$ has the universal property of a coproduct, i.e. for every object $Y\in\Cc$ (or $\Ho(\Cc)$) the map
+\begin{align*}
+    \ts\Ho(\Cc)(\coprod_{i\in I}X_i,Y)\to\ts\prod_{i\in I}\Ho(\Cc)(X_i,Y),\ \psi\mapsto (\psi\circ\gamma(\kappa_j))_{j\in J}
+\end{align*}
+is bijective.
+
+Surjectivity. Let $(\psi_j:X_j\to Y)_{j\in I}$ be an $I$-indexed family of morphisms in $\Ho(\Cc)$. By the calculus of fractions, there are $\Cc$-morphisms $f_j:X_j\to W_j$ and acyclic cofibrations $s_j:Y\acco W_j$ such that
+\[\psi_j=\gamma(s_j)^\inv\circ\gamma(f_j).\]
+Consider now
+\[\textstyle\coprod_{i\in I}X_i\xto{\amalg_i f_i}\coprod_{i\in I} W_i\xleftarrow{\amalg_i s_i}\coprod_{i\in I}Y\xto{\nabla}Y.\]
+This yields a morphism
+\[\gamma(\nabla)\circ\gamma(\amalg s_i)^\inv\circ\gamma(\amalg_i f_i):\textstyle\coprod_{i\in I}X_i\to Y\]
+in $\Ho(\Cc)$ which is a preimage of $\cb{\psi_j}_{j\in I}$.
+
+Injectivity. Let $\psi,\psi':\coprod_{i\in I}X_i\to Y$ be morphisms in $\Ho(\Cc)$ such that
+\[\psi\circ\gamma(\kappa_j)=\psi'\circ\gamma(\kappa_j)\]
+for all $j\in J$.
+
+Special case. $\psi=\gamma(f)$ and $\psi'=\gamma(f')$ for two $\Cc$-morphisms $f,f':\coprod_{i\in I}X_i\to Y$. Then
+\[\gamma(f\kappa_j)=\gamma(f)\circ\gamma(\kappa_j)=\psi\circ\gamma(\kappa_j)=\psi'\circ\gamma(\kappa_j)=\gamma(f')\circ\gamma(\kappa_j)=\gamma(f'\kappa_j).\]
+By the calculus of fractions, there exist a family of acyclic cofibrations $t_j:Y\acco\bar Y_j$ such that $t_jf\kappa_j\sim t_j f'\kappa_j$. So there are cylinder objects for all the $X_j$'s and homotopies $H_j:I_j\to\bar Y_j$ that witness this. We choose a pushout
+\[
+\begin{tikzcd}
+\coprod_{i\in I} Y \ar[d,tail,"\amalg_j t_j"',"\sim"] \ar[r,"\nabla"] & Y \ar[d,tail,"t"',"\sim"]\\
+\coprod_{i\in I}\bar Y_i \ar[r,"\nabla'"'] & Y'
+\end{tikzcd}
+\]
+The coproduct of the cylinder objects of all the $X_j$'s is a cylinder object for $\coprod_{j\in I}X_j$. Then the morphism
+\[\ts\coprod_{i\in I}I_j\xto{\amalg_{i\in I} H_i}\ts\coprod_{i\in I}\bar Y_i\xto{\nabla'}Y'\]
+is a homotopy from $tf$ to $tf'$. So $\gamma(tf)=\gamma(tf')$ in $\Ho(\Cc)$. Since $t$ is an equivalence, we conclude $\gamma(f)=\gamma(f')$.
+
+General case. Let $\psi,\psi':\coprod_{i\in I}X_i\to Y$ be a morphism in $\Ho(\Cc)$ such that
+\[\psi\circ\gamma(\kappa_j)=\psi'\circ\gamma(\kappa_j)\]
+for all $j\in I$. Given $f:\coprod_{i\in I}X_i\to W,\ f':\coprod_{i\in I}X_i\to W'$, the calculus of fractions produces
+\[s:Y\acco W,\ s':Y\acco W'\]
+such that $\psi=\gamma(s)^\inv\circ\gamma(f)$ and $\gamma(s')^\inv\circ\gamma(f')$. We choose a pushout
+\[
+\begin{tikzcd}
+ Y \ar[d,"s'"',"\sim"] \ar[r,tail,"s","\sim"'] & W \ar[d,"t"]\\
+W' \ar[r,"t'"'] & V
+\end{tikzcd}
+\]
+then we have
+\[\gamma(tf)\circ\gamma(\kappa_j)=\gamma(t)\circ\gamma(s)\circ\psi\circ\gamma(\kappa_j)=\gamma(t')\circ\gamma(s')\circ\psi'\circ\gamma(\kappa_j)=\gamma(t'f')\circ\gamma(k_j)\]
+for all $j\in J$. By the special case we get $\gamma(tf)=\gamma(t'f')$. Thus,
+\[\gamma(ts)\circ\psi=\gamma(tf)=\gamma(t'f')=\gamma(t's')\circ\psi'.\]
+Moreover, $\gamma(ts)=\gamma(t's')$ is invertible, so $\psi=\psi'$.
+\end{proof}
